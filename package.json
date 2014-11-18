@@ -1,0 +1,33 @@
+{
+  "name": "marty-devtools",
+  "version": "0.0.0",
+  "description": "Chrome Developer Tools for marty.js",
+  "main": "background.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jhollingworth/marty-devtools.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhollingworth/marty-devtools/issues"
+  },
+  "homepage": "https://github.com/jhollingworth/marty-devtools",
+  "devDependencies": {
+    "browserify": "^5.12.0",
+    "browserify-shim": "^3.7.0",
+    "jsxcs": "0.0.3",
+    "jsxhint": "^0.4.14",
+    "reactify": "^0.14.0",
+    "react": "^0.12.0",
+    "watchify": "^2.1.1"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
