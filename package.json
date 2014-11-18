@@ -11,7 +11,12 @@
     "url": "git://github.com/jhollingworth/marty-devtools.git"
   },
   "author": "",
-  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/jhollingworth/marty-devtools/master/LICENSE"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/jhollingworth/marty-devtools/issues"
   },
