@@ -1,6 +1,6 @@
 BIN = ./node_modules/.bin
 
-.PHONY: bootstrap bootstrap-js  start clean test docs release-docs;
+.PHONY: bootstrap bootstrap-js  start clean test docs release-docs start-chinwag;
 
 SRC = $(shell find ./app ./injected -type f -name '*.js')
 
@@ -28,3 +28,8 @@ build: lint
 
 build-watch:
 	@$(BIN)/watchify -v --require ./app/index.js -o ./dist/marty-devtools.js
+
+start-chinwag:
+	@mkdir -p ./test/fixtures/chinwag/dist
+	@node ./test/fixtures/chinwag/app/server &
+	@$(BIN)/watchify -v --require ./test/fixtures/chinwag/app/main.js -o ./test/fixtures/chinwag/dist/chinwag.js

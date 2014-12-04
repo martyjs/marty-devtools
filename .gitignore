@@ -28,3 +28,4 @@ _site
 *.sublime-workspace
 nbproject
 Thumbs.db
+dist
