@@ -1,14 +1,18 @@
 BIN = ./node_modules/.bin
 
-.PHONY: bootstrap bootstrap-js  start clean test docs release-docs start-chinwag;
+.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chinwag;
 
 SRC = $(shell find ./app ./injected -type f -name '*.js')
 
 test: lint
 	# @$(BIN)/karma start --single-run
 
-bootstrap: package.json
+bootstrap: bootstrap-blink package.json
 	@npm install
+
+bootstrap-blink:
+	@git submodule init
+	@git submodule foreach git pull
 
 test-watch: lint
 	# @$(BIN)/karma start
