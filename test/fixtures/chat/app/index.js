@@ -5,6 +5,7 @@ var Marty = require('marty');
 var Router = require('./router');
 
 window.React = React; // For React DevTools
+window.Marty = Marty;
 
 Marty.Diagnostics.enabled = true;
 

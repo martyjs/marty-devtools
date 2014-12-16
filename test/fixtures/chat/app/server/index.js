@@ -15,6 +15,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 
+console.log(path.join(__dirname, '..', '..', '..', '..', '..', 'blink', 'Source', 'devtools', 'front_end'))
+
+app.use('/blink', express.static(path.join(__dirname, '..', '..', '..', '..', '..', 'blink', 'Source', 'devtools', 'front_end') ));
+
 app.get('/', require('./routes/index'));
 
 app.get('/messages/:id', require('./routes/index'));
