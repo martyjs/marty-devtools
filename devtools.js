@@ -5,6 +5,6 @@
 chrome.devtools.panels.create(
     'Marty',
     null, // No icon path
-    'Panel/PreprocessorPanel.html',
+    'views/main.html',
     null // no callback needed
 );

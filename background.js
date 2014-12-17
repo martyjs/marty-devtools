@@ -48,7 +48,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // background.js
 var openCount = 0;
 chrome.runtime.onConnect.addListener(function (port) {
-    if (port.name == "devtools-page") {
+    if (port.name == "marty-devtools") {
       if (openCount == 0) {
         console.log("DevTools window opening.");
       }

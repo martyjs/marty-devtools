@@ -1,8 +1,8 @@
 {
-  "name": "Chrome Preprocessor Example",
-  "version": "0.1",
-  "description": "Test.",
-  "devtools_page": "devtools.html",
+  "name": "Marty DevTools",
+  "version": "0.0.1",
+  "description": "Developer tools for Marty",
+  "devtools_page": "main.html",
   "manifest_version": 2,
   "background": {
     "scripts": ["background.js"]

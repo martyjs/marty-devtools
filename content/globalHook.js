@@ -11,28 +11,39 @@ var js =
   }
 
   function listenToActions(Marty) {
-    var Actions = Marty.Stores.Actions;
-    var listener = Actions.addChangeListener(function () {
+    Marty.Stores.Actions.addChangeListener(onActionsChanged);
+
+    function onActionsChanged(state, store, actionToken) {
       var message = {
-        type: "ACTIONS_CHANGED",
+        type: "ACTION_CHANGED",
         target: "devtools-page",
         source: 'marty-extension',
         payload: {
-          actions: Actions.getAll()
+          stores: stateOfStores(),
+          action: Marty.getAction(actionToken)
         }
       };
 
-      console.log('Actions changed', message);
+      console.log('action changed', message.payload);
 
       window.postMessage(message, '*');
-    });
+    }
 
+    function stateOfStores() {
+      var stores = {};
+
+      Marty.getStores().forEach(function (store) {
+        stores[store.name] = store.getState();
+      });
+
+      return stores;
+    }
   }
 }).toString() + ")(window)";
 
 window.addEventListener('message', function(event) {
   // Only accept messages from the same frame
-  if (event.source !== window) {
+  if (event && event.source !== window) {
     return;
   }
 
@@ -45,7 +56,6 @@ window.addEventListener('message', function(event) {
 
   chrome.runtime.sendMessage(message);
 });
-
 
 var script = document.createElement('script');
 script.textContent = js;
