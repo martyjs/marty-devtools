@@ -5,6 +5,6 @@
 chrome.devtools.panels.create(
     'Marty',
     null, // No icon path
-    'views/main.html',
+    'views/devpanel.html',
     null // no callback needed
 );
