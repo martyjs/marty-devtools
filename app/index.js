@@ -1,10 +1,10 @@
 var backgroundPageConnection = chrome.runtime.connect({
-  name: "marty-devtools"
+  name: 'marty-devtools'
 });
 
 backgroundPageConnection.postMessage({
-    name: 'init',
-    tabId: chrome.devtools.inspectedWindow.tabId
+  name: 'init',
+  tabId: chrome.devtools.inspectedWindow.tabId
 });
 
 
@@ -16,5 +16,5 @@ try {
   panel.show(document.getElementById('main-panel-holder'));
 
 } catch (e) {
-  console.log("ERROR:" + e);
+  console.log('ERROR:' + e);
 }

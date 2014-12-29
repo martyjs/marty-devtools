@@ -10,7 +10,7 @@ ActionPanelNode.prototype = {
     /** override */
     createCells: function()
     {
-        this._actionTypeCell = this._createDivInTD("action-type");
+        this._actionTypeCell = this._createDivInTD('action-type');
     },
 
     wasDetached: function()
@@ -53,14 +53,14 @@ ActionPanelNode.prototype = {
     _createDivInTD: function(columnIdentifier)
     {
         var td = this.createTD(columnIdentifier);
-        var div = td.createChild("div");
+        var div = td.createChild('div');
         this._element.appendChild(td);
         return div;
     },
 
     refreshAction: function()
     {
-        console.log("refresh action: " + JSON.stringify(this._action));
+        console.log('refresh action: ' + JSON.stringify(this._action));
         this._refreshActionType();
     },
 

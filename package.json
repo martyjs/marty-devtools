@@ -34,14 +34,28 @@
     "ejs": "^1.0.0",
     "marty": "^0.5.x",
     "uuid": "^2.0.1",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "karma": "^0.12.24",
+    "karma-bro": "^0.10.0",
+    "karma-chrome-launcher": "^0.1.5",
+    "karma-cli": "0.0.4",
+    "karma-mocha": "^0.1.9",
+    "karma-spec-reporter": "0.0.13",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.5.0"
   },
   "browserify-shim": {
+    "chrome": "global:chrome",
     "web-inspector": "global:WebInspector"
   },
   "browserify": {
     "transform": [
       "reactify"
     ]
+  },
+  "dependencies": {
+    "marty": "^0.6.2",
+    "immutable": "^3.4.1"
   }
 }

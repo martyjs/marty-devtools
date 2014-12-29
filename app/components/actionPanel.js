@@ -17,28 +17,28 @@ function ActionPanel() {
   var columns = [];
 
   columns.push({
-    id: "action-type",
-    titleDOMFragment: this.makeHeaderFragment("Action Type", ""),
-    title: "Action Type",
+    id: 'action-type',
+    titleDOMFragment: this.makeHeaderFragment('Action Type', ''),
+    title: 'Action Type',
     sortable: true,
     weight: 6,
     align: WebInspector.DataGrid.Align.Left
   });
 
   columns.push({
-    id: "source",
-    titleDOMFragment: this.makeHeaderFragment("Source", ""),
-    title: "Source",
+    id: 'source',
+    titleDOMFragment: this.makeHeaderFragment('Source', ''),
+    title: 'Source',
     sortable: true,
     weight: 6,
     align: WebInspector.DataGrid.Align.Left
   });
 
   this._dataGrid = new WebInspector.DataGrid(columns);
-  this._dataGrid.setName("marty-actions");
+  this._dataGrid.setName('marty-actions');
   this._dataGrid.resizeMethod = WebInspector.DataGrid.ResizeMethod.Last
   this._dataGrid.renderInline();
-  this._dataGrid.element.addStyleClass("network-log-grid");
+  this._dataGrid.element.addStyleClass('network-log-grid');
 
   this.refresh();
 }
@@ -60,14 +60,14 @@ ActionPanel.prototype = {
   //   }
 
   //   this._needsRefresh = true;
-  //   console.log("_scheduleRefresh")
+  //   console.log('_scheduleRefresh')
   //   if (this.isShowing() && !this._refreshTimeout) {
   //     this._refreshTimeout = setTimeout(this.refresh.bind(this), 500);
   //   }
   // },
   _removeAllNodeHighlights: function() {
     if (this._highlightedNode) {
-      this._highlightedNode.element.removeStyleClass("highlighted-row");
+      this._highlightedNode.element.removeStyleClass('highlighted-row');
       delete this._highlightedNode;
     }
   },
@@ -135,7 +135,7 @@ ActionPanel.prototype = {
 
       console.log(this._dataGrid.element.outerHTML)
     } catch (e) {
-      console.log("failed to refresh: " + e);
+      console.log('failed to refresh: ' + e);
     }
   },
   _updateOffscreenRows: function() {
@@ -157,7 +157,7 @@ ActionPanel.prototype = {
 
           var dataGridNode = this._dataGrid.dataGridNodeFromNode(row);
           if (dataGridNode.isFilteredOut()) {
-              row.removeStyleClass("offscreen");
+              row.removeStyleClass('offscreen');
               continue;
           }
 
@@ -166,7 +166,7 @@ ActionPanel.prototype = {
 
           var rowIsVisible = unfilteredRowIndex * rowHeight < visibleBottom && (unfilteredRowIndex + 1) * rowHeight > visibleTop;
           if (rowIsVisible !== row.rowIsVisible) {
-              row.enableStyleClass("offscreen", !rowIsVisible);
+              row.enableStyleClass('offscreen', !rowIsVisible);
               row.rowIsVisible = rowIsVisible;
           }
           unfilteredRowIndex++;
@@ -175,7 +175,7 @@ ActionPanel.prototype = {
   makeHeaderFragment: function(title, subtitle) {
     var fragment = document.createDocumentFragment();
     fragment.createTextChild(title);
-    var subtitleDiv = fragment.createChild("div", "network-header-subtitle");
+    var subtitleDiv = fragment.createChild('div', 'network-header-subtitle');
     subtitleDiv.createTextChild(subtitle);
     return fragment;
   },

@@ -1,5 +1,5 @@
 // var backgroundPageConnection = chrome.runtime.connect({
-//     name: "marty-devtools"
+//     name: 'marty-devtools'
 // });
 
 // backgroundPageConnection.postMessage({
@@ -8,8 +8,8 @@
 // });
 
 // backgroundPageConnection.onMessage.addListener(function (message) {
-//   results.appendChild(createRow("action created"));
+//   results.appendChild(createRow('action created'));
 // });
 
 
-chrome.devtools.panels.create('Marty', null, 'app/main.html');
+chrome.devtools.panels.create('Marty', null, 'app/index.html');

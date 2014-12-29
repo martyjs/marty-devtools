@@ -6,7 +6,7 @@ chrome.runtime.onConnect.addListener(function (port) {
     var extensionListener = function (message, sender, sendResponse) {
       // The original connection event doesn't include the tab ID of the
       // DevTools page, so we need to send it explicitly.
-      if (message.name == "init") {
+      if (message.name == 'init') {
         connections[message.tabId] = port;
         return;
       }
@@ -37,10 +37,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       if (tabId in connections) {
         connections[tabId].postMessage(request);
       } else {
-        console.log("Tab not found in connection list.");
+        console.log('Tab not found in connection list.');
       }
     } else {
-      console.log("sender.tab not defined.");
+      console.log('sender.tab not defined.');
     }
     return true;
 });
@@ -48,16 +48,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // background.js
 var openCount = 0;
 chrome.runtime.onConnect.addListener(function (port) {
-    if (port.name == "marty-devtools") {
+    if (port.name == 'marty-devtools') {
       if (openCount == 0) {
-        console.log("DevTools window opening.");
+        console.log('DevTools window opening.');
       }
       openCount++;
 
       port.onDisconnect.addListener(function(port) {
           openCount--;
           if (openCount == 0) {
-            console.log("Last DevTools window closing.");
+            console.log('Last DevTools window closing.');
           }
       });
     }

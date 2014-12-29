@@ -1,11 +1,11 @@
 BIN = ./node_modules/.bin
 
-.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chinwag;
+.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chat;
 
 SRC = $(shell find ./app ./injected -type f -name '*.js')
 
 test: lint
-	# @$(BIN)/karma start --single-run
+	@$(BIN)/karma start --single-run
 
 bootstrap: bootstrap-blink package.json
 	@npm install
@@ -18,8 +18,8 @@ test-watch: lint
 	# @$(BIN)/karma start
 
 lint: bootstrap clean
-	@$(BIN)/jsxcs $(SRC);
-	@$(BIN)/jsxhint $(SRC);
+	# @$(BIN)/jsxcs $(SRC);
+	# @$(BIN)/jsxhint $(SRC);
 
 release: test build
 	@git add dist && (git diff --exit-code > /dev/null || git commit -m "Rebuilding source")
@@ -27,13 +27,15 @@ release: test build
 	@git push origin master && git push --tags
 	@npm publish
 
-build: lint
-	@$(BIN)/browserify --require ./app/index.js  > ./dist/marty-devtools.js
+build:
+	@mkdir -p dist
+	@$(BIN)/browserify ./app/index.js -o ./dist/app.js
 
 build-watch:
-	@$(BIN)/watchify -v --require ./app/index.js -o ./dist/marty-devtools.js
+	@mkdir -p dist
+	@$(BIN)/watchify -v ./app/index.js -o ./dist/app.js
 
-start-chinwag:
-	@mkdir -p ./test/fixtures/chinwag/dist
-	@node ./test/fixtures/chinwag/app/server &
-	@$(BIN)/watchify -v --require ./test/fixtures/chinwag/app/main.js -o ./test/fixtures/chinwag/dist/chinwag.js
+start-chat:
+	@mkdir -p ./test/fixtures/chat/dist
+	@node ./test/fixtures/chat/app/server &
+	@$(BIN)/watchify -v --require ./test/fixtures/chat/app/main.js -o ./test/fixtures/chat/dist/chat.js

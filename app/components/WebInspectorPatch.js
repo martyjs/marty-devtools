@@ -15,7 +15,7 @@
  *    endorse or promote products derived from this software without specific
  *    prior written permission.
  * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
@@ -30,13 +30,13 @@
 
 // Prevent initialization
 
-window.removeEventListener("DOMContentLoaded", windowLoaded, false);
+window.removeEventListener('DOMContentLoaded', windowLoaded, false);
 
 // Hook up click handler
 
-document.addEventListener("click", function(event) {
-    var anchor = event.target.enclosingNodeOrSelfWithNodeName("a");
-    if (!anchor || (anchor.target === "_blank"))
+document.addEventListener('click', function (event) {
+    var anchor = event.target.enclosingNodeOrSelfWithNodeName('a');
+    if (!anchor || (anchor.target === '_blank'))
         return;
 
     // Prevent the link from navigating, since we don't do any navigation by following links normally.
@@ -68,22 +68,22 @@ document.addEventListener("click", function(event) {
 // Monkey patch some url resolution
 
 WebInspector.Linkifier.prototype.linkifyLocation =
-  function(sourceURL, lineNumber, columnNumber, classes) {
+function (sourceURL, lineNumber, columnNumber, classes) {
     return WebInspector.linkifyResourceAsNode(sourceURL, lineNumber, classes);
   };
 
 WebInspector.Linkifier.prototype.linkifyRawLocation =
-  function(rawLocation, classes) {
-    return WebInspector.linkifyURLAsNode("", "", classes, false);
+function (rawLocation, classes) {
+    return WebInspector.linkifyURLAsNode('', '', classes, false);
     return anchor;
   };
 
-WebInspector.resourceForURL = function() {
+  WebInspector.resourceForURL = function () {
   return null;
 };
 
 WebInspector.workspace = {
-  uiSourceCodeForURL: function() { return null; }
+  uiSourceCodeForURL: function () { return null; }
 };
 
 function importScript(name) {
@@ -99,18 +99,18 @@ debugCSS = true; // Make url() expressions resolves to the relative path
 
 WebInspector.View.prototype._registerRequiredCSS =
   WebInspector.View.prototype.registerRequiredCSS;
-WebInspector.View.prototype.registerRequiredCSS = function(cssFile) {
+  WebInspector.View.prototype.registerRequiredCSS = function (cssFile) {
   this._registerRequiredCSS('../blink/Source/devtools/front_end/' + cssFile);
 };
 
 WebInspector.debuggerModel = {
-  selectedCallFrame: function() {}
+  selectedCallFrame: function () {}
 };
 
 // Monkey patch DOM node constructor to allow custom extensions to the payload
 
 WebInspector._DOMNode = WebInspector.DOMNode;
-WebInspector.DOMNode = function(domAgent, doc, isInShadowTree, payload) {
+WebInspector.DOMNode = function (domAgent, doc, isInShadowTree, payload) {
   WebInspector._DOMNode.apply(this, arguments);
   if (payload.ownerId) {
     this.ownerNode = domAgent._idToDOMNode[payload.ownerId];

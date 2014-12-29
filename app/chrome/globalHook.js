@@ -1,5 +1,5 @@
 var js =
- "(" + (function (window) {
+ '(' + (function (window) {
   findMarty();
 
   function findMarty() {
@@ -15,8 +15,8 @@ var js =
 
     function onActionsChanged(state, store, actionToken) {
       var message = {
-        type: "ACTION_CHANGED",
-        target: "devtools-page",
+        type: 'ACTION_CHANGED',
+        target: 'devtools-page',
         source: 'marty-extension',
         payload: {
           stores: stateOfStores(),
@@ -39,7 +39,7 @@ var js =
       return stores;
     }
   }
-}).toString() + ")(window)";
+}).toString() + ')(window)';
 
 window.addEventListener('message', function(event) {
   // Only accept messages from the same frame
