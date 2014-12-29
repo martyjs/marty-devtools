@@ -12,4 +12,4 @@
 // });
 
 
-chrome.devtools.panels.create('Marty', null, 'views/devpanel.html');
+chrome.devtools.panels.create('Marty', null, 'app/main.html');

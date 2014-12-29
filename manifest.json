@@ -2,15 +2,15 @@
   "name": "Marty DevTools",
   "version": "0.0.1",
   "description": "Developer tools for Marty",
-  "devtools_page": "main.html",
+  "devtools_page": "app/chrome/devtools.html",
   "manifest_version": 2,
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["app/chrome/background.js"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content/globalHook.js"],
+      "js": ["app/chrome/globalHook.js"],
       "run_at": "document_start"
     }
   ],

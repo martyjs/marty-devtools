@@ -18,6 +18,3 @@ try {
 } catch (e) {
   console.log("ERROR:" + e);
 }
-
-// panel.markAsRoot();
-// panel.show();

@@ -67,7 +67,7 @@ ActionPanelNode.prototype = {
     _refreshActionType: function()
     {
         this._actionTypeCell.removeChildren();
-        this._actionTypeCell.appendChild(document.createTextNode("TEST"));
+        this._actionTypeCell.appendChild(document.createTextNode(this._action.type));
 
     },
 

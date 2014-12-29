@@ -34,21 +34,19 @@ function ActionPanel() {
     align: WebInspector.DataGrid.Align.Left
   });
 
-  // this._dataGrid = new WebInspector.DataGrid(columns);
-  // this._dataGrid.setName("marty-actions");
-  // this._dataGrid.resizeMethod = WebInspector.DataGrid.ResizeMethod.Last
-  this._dataGrid = WebInspector.DataGrid.createSortableDataGrid(["Type"], ["foo"]);
-
-  console.log(this._dataGrid.element.outerHTML)
+  this._dataGrid = new WebInspector.DataGrid(columns);
+  this._dataGrid.setName("marty-actions");
+  this._dataGrid.resizeMethod = WebInspector.DataGrid.ResizeMethod.Last
+  this._dataGrid.renderInline();
   this._dataGrid.element.addStyleClass("network-log-grid");
 
-  // this._staleActions[123] ={
-  //   id: 123
-  // };
-  // this.refresh();
+  this.refresh();
 }
 
 ActionPanel.prototype = {
+  addAction: function (action) {
+    this._staleActions[action.id] = action;
+  },
   // _refreshAction: function(action) {
   //   if (!this._actionsById[action.id])
   //       return;
