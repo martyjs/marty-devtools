@@ -21,7 +21,8 @@
     "url": "https://github.com/jhollingworth/marty-devtools/issues"
   },
   "homepage": "https://github.com/jhollingworth/marty-devtools",
-  "devDependencies": {
+  "dependencies": {
+    "immutable": "^3.4.1",
     "browserify": "^5.12.0",
     "browserify-shim": "^3.7.0",
     "jsxcs": "0.0.3",
@@ -32,7 +33,7 @@
     "express": "^4.10.4",
     "body-parser": "^1.10.0",
     "ejs": "^1.0.0",
-    "marty": "^0.5.x",
+    "marty": "^0.6.x",
     "uuid": "^2.0.1",
     "lodash": "^2.4.1",
     "karma": "^0.12.24",
@@ -53,9 +54,5 @@
     "transform": [
       "reactify"
     ]
-  },
-  "dependencies": {
-    "marty": "^0.6.2",
-    "immutable": "^3.4.1"
   }
 }

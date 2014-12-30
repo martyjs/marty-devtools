@@ -11,8 +11,8 @@ bootstrap: bootstrap-blink package.json
 	@npm install
 
 bootstrap-blink:
-	@git submodule init
-	@git submodule foreach git pull
+	@git submodule update --init
+
 
 test-watch: lint
 	# @$(BIN)/karma start
