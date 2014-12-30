@@ -1,3 +1,8 @@
+/** @jsx React.DOM */
+
+var React = require('react');
+var ActionPanel = require('./actionPanel');
+
 function MartyPanel() {
   WebInspector.View.call(this);
 
@@ -11,28 +16,13 @@ function MartyPanel() {
   this.element.classList.add('vbox', 'fill');
   this.registerRequiredCSS('networkLogView.css');
   this.registerRequiredCSS('filter.css');
-
+  console.log(Preferences)
   this.createSidebarView(this.element, WebInspector.SidebarView.SidebarPosition.End, initialSidebarWidth, initialSidebarHeight);
   this.splitView.setSidebarElementConstraints(Preferences.minElementsSidebarWidth, Preferences.minElementsSidebarHeight);
   this.splitView.setMainElementConstraints(minimumContentWidthPercent, minimumContentHeightPercent);
   this.splitView.addEventListener(WebInspector.SidebarView.EventTypes.Resized, this.sidebarResized.bind(this));
 
-  var log = document.createElement('div');
-  log.id = 'log';
-
-  this.splitView.sidebarElement.appendChild(log);
-
-  var _log = console.log;
-
-  console.log = function (text) {
-    var message = document.createElement('div');
-    message.className = 'message';
-    message.textContent = text;
-    log.appendChild(message);
-  }
-
-  this.actionPanel = new ActionPanel();
-  this.actionPanel.show(this.splitView.mainElement);
+  React.render(<ActionPanel />, this.splitView.mainElement);
 }
 
 MartyPanel.prototype = {
@@ -58,3 +48,5 @@ MartyPanel.prototype = {
   },
   __proto__: WebInspector.View.prototype
 }
+
+module.exports = MartyPanel;

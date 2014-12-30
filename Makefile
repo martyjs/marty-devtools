@@ -29,11 +29,11 @@ release: test build
 
 build:
 	@mkdir -p dist
-	@$(BIN)/browserify ./app/index.js -o ./dist/app.js
+	@$(BIN)/browserify ./app/index.js -t reactify -o ./dist/app.js -d
 
 build-watch:
 	@mkdir -p dist
-	@$(BIN)/watchify -v ./app/index.js -o ./dist/app.js
+	@$(BIN)/watchify ./app/index.js -o ./dist/app.js -v -t reactify -d
 
 start-chat:
 	@mkdir -p ./test/fixtures/chat/dist

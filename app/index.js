@@ -1,20 +1,6 @@
-var backgroundPageConnection = chrome.runtime.connect({
-  name: 'marty-devtools'
-});
+var MartyPanel = require('./components/martyPanel');
 
-backgroundPageConnection.postMessage({
-  name: 'init',
-  tabId: chrome.devtools.inspectedWindow.tabId
-});
-
-
-try {
-  WebInspector.installPortStyles();
-
-  var panel = new MartyPanel();
-  panel.markAsRoot();
-  panel.show(document.getElementById('main-panel-holder'));
-
-} catch (e) {
-  console.log('ERROR:' + e);
-}
+WebInspector.installPortStyles();
+var panel = new MartyPanel();
+panel.markAsRoot();
+panel.show(document.getElementById('main-panel-holder'));
