@@ -16,7 +16,6 @@ function MartyPanel() {
   this.element.classList.add('vbox', 'fill');
   this.registerRequiredCSS('networkLogView.css');
   this.registerRequiredCSS('filter.css');
-  console.log(Preferences)
   this.createSidebarView(this.element, WebInspector.SidebarView.SidebarPosition.End, initialSidebarWidth, initialSidebarHeight);
   this.splitView.setSidebarElementConstraints(Preferences.minElementsSidebarWidth, Preferences.minElementsSidebarHeight);
   this.splitView.setMainElementConstraints(minimumContentWidthPercent, minimumContentHeightPercent);

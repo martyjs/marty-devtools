@@ -1,47 +1,33 @@
-var js =
- '(' + (function (window) {
-  findMarty();
+var connectToMarty = function (window) {
+  tryAndFindMarty();
 
-  function findMarty() {
+  function tryAndFindMarty() {
     if (window.Marty) {
-      listenToActions(window.Marty);
+      listenToMarty(window.Marty);
     } else {
-      setTimeout(findMarty, 1);
+      setTimeout(tryAndFindMarty, 1);
     }
   }
 
-  function listenToActions(Marty) {
-    Marty.Stores.Actions.addChangeListener(onActionsChanged);
+  function listenToMarty(Marty) {
+    Marty.Dispatcher.register(onActionDispatched);
 
-    function onActionsChanged(state, store, actionToken) {
+    function onActionDispatched(action) {
       var message = {
-        type: 'ACTION_CHANGED',
+        type: 'ACTION_DISPATCHED',
         target: 'devtools-page',
         source: 'marty-extension',
         payload: {
-          stores: stateOfStores(),
-          action: Marty.getAction(actionToken)
+          action: action.toJSON()
         }
       };
 
-      console.log('action changed', message.payload);
-
       window.postMessage(message, '*');
     }
-
-    function stateOfStores() {
-      var stores = {};
-
-      Marty.getStores().forEach(function (store) {
-        stores[store.name] = store.getState();
-      });
-
-      return stores;
-    }
   }
-}).toString() + ')(window)';
+};
 
-window.addEventListener('message', function(event) {
+var onMessageFromPage = function (event) {
   // Only accept messages from the same frame
   if (event && event.source !== window) {
     return;
@@ -55,9 +41,12 @@ window.addEventListener('message', function(event) {
   }
 
   chrome.runtime.sendMessage(message);
-});
+};
+
+
+window.addEventListener('message', onMessageFromPage);
 
 var script = document.createElement('script');
-script.textContent = js;
+script.textContent = '(' + connectToMarty.toString() + ')(window)';
 document.documentElement.appendChild(script);
 script.parentNode.removeChild(script);

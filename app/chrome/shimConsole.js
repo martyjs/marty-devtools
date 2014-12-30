@@ -1,0 +1,22 @@
+var _ = require('lodash');
+
+function shimConsole(console) {
+  if (!window.chrome.devtools) {
+    return;
+  }
+
+  ['log', 'info', 'warn', 'error'].forEach(function (type) {
+    var func = console[type];
+
+    console[type] = function () {
+      var args = JSON.stringify(_.toArray(arguments))
+      var code = 'console.' + type + '.apply(console, ' + args + ')';
+
+      chrome.devtools.inspectedWindow.eval(code);
+
+      func.apply(console, arguments);
+    };
+  });
+}
+
+module.exports = shimConsole;
