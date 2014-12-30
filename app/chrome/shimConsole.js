@@ -9,10 +9,10 @@ function shimConsole(console) {
     var func = console[type];
 
     console[type] = function () {
-      var args = JSON.stringify(_.toArray(arguments))
+      var args = JSON.stringify(_.toArray(arguments));
       var code = 'console.' + type + '.apply(console, ' + args + ')';
 
-      chrome.devtools.inspectedWindow.eval(code);
+      chrome.devtools.inspectedWindow.eval(code); // jshint ignore:line
 
       func.apply(console, arguments);
     };

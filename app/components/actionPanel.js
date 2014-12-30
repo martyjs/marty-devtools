@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var React = require('react');
 var Marty = require('marty');
-var ObjectTree = require('./objectTree');
 var ActionList = require('./actionList');
 var ActionStore = require('../stores/actionStore');
 var ActionHandlerPanel = require('./actionHandlerPanel');
@@ -72,7 +71,7 @@ var ActionPanel = React.createClass({
     var handlers = _.map(action.handlers, function (handler) {
       return _.extend({
         action: action
-      }, handler)
+      }, handler);
     });
 
     return (
@@ -93,7 +92,7 @@ var ActionPanel = React.createClass({
     );
   },
   onClickActionHandler: function (handler) {
-    ActionActionCreators.toggleActionHandler(handler.action.id, handler.id)
+    ActionActionCreators.toggleActionHandler(handler.action.id, handler.id);
   },
   onClickAction: function (action) {
     ActionActionCreators.toggleAction(action.id);

@@ -6,8 +6,13 @@ var ActionActionCreators = require('./actions/actionActionCreators');
 shimConsole(window.console);
 
 connection.start();
+
 connection.on('ACTION_DISPATCHED', function (e) {
   ActionActionCreators.upsertAction(e.action);
+});
+
+connection.on('PAGE_UNLOAD', function () {
+  ActionActionCreators.clearActions();
 });
 
 var panel = new MartyPanel();

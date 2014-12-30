@@ -5,6 +5,7 @@ var ActionConstants = require('../constants/actionConstants');
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
+    clearActions: ActionConstants.CLEAR_ACTIONS,
     upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
     toggleViewHandler: ActionConstants.TOGGLE_VIEW_HANDLER,
@@ -12,6 +13,10 @@ var ActionStore = Marty.createStore({
   },
   getInitialState: function () {
     return {};
+  },
+  clearActions: function () {
+    this.clear();
+    this.hasChanged();
   },
   getAll: function () {
     return _.where(_.values(this.state), {
@@ -24,6 +29,7 @@ var ActionStore = Marty.createStore({
     });
   },
   upsertAction: function (action) {
+    action.timestamp = new Date(action.timestamp);
     this.state[action.id] = action;
     this.hasChanged();
   },
@@ -46,7 +52,7 @@ var ActionStore = Marty.createStore({
     });
     this.hasChanged();
   },
-  toggleViewHandler: function (actionId, handlerId) {
+  toggleViewHandler: function () {
   },
   toggleActionHandler: function (actionId, handlerId) {
     var action = this.state[actionId];

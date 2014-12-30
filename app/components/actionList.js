@@ -2,9 +2,7 @@
 
 var _ = require('lodash');
 var React = require('react');
-var Marty = require('marty');
 var classSet = require('react/lib/cx');
-var ActionStore = require('../stores/actionStore');
 
 var ActionList = React.createClass({
   render: function () {

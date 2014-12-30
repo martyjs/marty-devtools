@@ -31,6 +31,13 @@
     "before": true,
     "after": true,
     "beforeEach": true,
-    "afterEach": true
+    "afterEach": true,
+    "WebInspector": true,
+    "loadScript": true,
+    "debugCSS": true,
+    "Preferences": true,
+    "chrome": true,
+    "TreeOutline": true,
+    "TreeElement": true
   }
 }

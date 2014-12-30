@@ -5,7 +5,7 @@ var React = require('react');
 
 var ObjectTree = React.createClass({
   render: function () {
-    return <div className='object-tree resource-headers-view'></div>
+    return <div className='object-tree resource-headers-view'></div>;
   },
   componentDidMount: function () {
     this.renderTree();
@@ -23,24 +23,24 @@ var ObjectTree = React.createClass({
 
     node.removeChildren();
 
-    var listElement = document.createElement("ol");
-    listElement.className = "outline-disclosure";
+    var listElement = document.createElement('ol');
+    listElement.className = 'outline-disclosure';
     node.appendChild(listElement);
 
     var treeOutline = new TreeOutline(listElement);
     treeOutline.expandTreeElementsWhenArrowing = true;
 
     _.each(obj, function (value, name) {
-      var valueElement = new TreeElement("", null, false);
+      var valueElement = new TreeElement('', null, false);
       valueElement.selectable = false;
       valueElement.title = this.formatHeader(name, value);
       treeOutline.appendChild(valueElement);
     }, this);
   },
-  formatHeader: function(name, value) {
+  formatHeader: function (name, value) {
     var fragment = document.createDocumentFragment();
-    fragment.createChild("div", "header-name").textContent = name + ":";
-    fragment.createChild("div", "header-value source-code").textContent = value;
+    fragment.createChild('div', 'header-name').textContent = name + ':';
+    fragment.createChild('div', 'header-value source-code').textContent = value;
     return fragment;
   },
 });

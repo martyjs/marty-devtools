@@ -10,6 +10,9 @@ var ActionActionCreators = Marty.createActionCreators({
   }),
   upsertAction: ActionConstants.UPSERT_ACTION(function (action) {
     this.dispatch(action);
+  }),
+  clearActions: ActionConstants.CLEAR_ACTIONS(function () {
+    this.dispatch();
   })
 });
 

@@ -1,5 +1,3 @@
-var _ = require('lodash');
-var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var connection, emitter = new EventEmitter();
 

@@ -2,7 +2,7 @@ BIN = ./node_modules/.bin
 
 .PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chat;
 
-SRC = $(shell find ./app ./injected -type f -name '*.js')
+SRC = $(shell find ./app -type f -name '*.js')
 
 test: lint
 	@$(BIN)/karma start --single-run
@@ -15,11 +15,11 @@ bootstrap-blink:
 
 
 test-watch: lint
-	# @$(BIN)/karma start
+	@$(BIN)/karma start
 
 lint: bootstrap clean
-	# @$(BIN)/jsxcs $(SRC);
-	# @$(BIN)/jsxhint $(SRC);
+	@$(BIN)/jsxcs $(SRC);
+	@$(BIN)/jsxhint $(SRC);
 
 release: test build
 	@git add dist && (git diff --exit-code > /dev/null || git commit -m "Rebuilding source")
