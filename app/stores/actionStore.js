@@ -5,20 +5,27 @@ var ActionConstants = require('../constants/actionConstants');
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
+    upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
     toggleViewHandler: ActionConstants.TOGGLE_VIEW_HANDLER,
     toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER
   },
   getInitialState: function () {
-    return mockActions();
+    return {};
   },
   getAll: function () {
-    return _.values(this.state);
+    return _.where(_.values(this.state), {
+      verbose: false
+    });
   },
   getSelectedAction: function () {
     return _.find(this.state, {
       selected: true
     });
+  },
+  upsertAction: function (action) {
+    this.state[action.id] = action;
+    this.hasChanged();
   },
   getSelectedActionHandler: function () {
     var selectedAction = this.getSelectedAction();
@@ -59,33 +66,5 @@ var ActionStore = Marty.createStore({
     this.hasChanged();
   }
 });
-
-function mockActions() {
-  var actions = {};
-
-  for (var i = 0; i < 100; i++) {
-    var action = mockAction(i);
-
-    actions[action.id] = action;
-  }
-
-  return actions;
-
-  function mockAction(id) {
-    return {
-      id: id,
-      type: 'CREATE_FOO',
-      handlers: [{
-        id: id + '-foo',
-        store: 'FooStore',
-        name: 'addFoo',
-      }, {
-        id: id + '-bar',
-        store: 'BarStore',
-        name: 'addBar',
-      }]
-    };
-  }
-}
 
 module.exports = ActionStore;

@@ -20,13 +20,11 @@ emitter.start = function () {
     });
 
     connection.onMessage.addListener(function (message) {
-      emitter.emit(message);
+      emitter.emit(message.type, message.payload);
     });
   } catch (e) {
     console.error('Failed to connect to background page');
   }
-}
-
-
+};
 
 module.exports = emitter;

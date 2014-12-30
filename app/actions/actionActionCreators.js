@@ -1,12 +1,16 @@
 var Marty = require('marty');
+var ActionConstants = require('../constants/actionConstants');
 
 var ActionActionCreators = Marty.createActionCreators({
-  toggleAction: function (actionId) {
+  toggleAction: ActionConstants.TOGGLE_ACTION(function (actionId) {
     this.dispatch(actionId);
-  },
-  toggleActionHandler: function (actionId, actionHandlerId) {
+  }),
+  toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER(function (actionId, actionHandlerId) {
     this.dispatch(actionId, actionHandlerId);
-  }
+  }),
+  upsertAction: ActionConstants.UPSERT_ACTION(function (action) {
+    this.dispatch(action);
+  })
 });
 
 module.exports = ActionActionCreators;

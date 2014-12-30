@@ -1,9 +1,14 @@
+var shimConsole = require('./chrome/shimConsole');
 var MartyPanel = require('./components/martyPanel');
 var connection = require('./chrome/backgroundConnection');
-var shimConsole = require('./chrome/shimConsole');
+var ActionActionCreators = require('./actions/actionActionCreators');
+
+shimConsole(window.console);
 
 connection.start();
-shimConsole(window.console);
+connection.on('ACTION_DISPATCHED', function (e) {
+  ActionActionCreators.upsertAction(e.action);
+});
 
 var panel = new MartyPanel();
 panel.markAsRoot();

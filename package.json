@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/jhollingworth/marty-devtools",
   "dependencies": {
-    "immutable": "^3.4.1",
     "browserify": "^5.12.0",
     "browserify-shim": "^3.7.0",
     "jsxcs": "0.0.3",
