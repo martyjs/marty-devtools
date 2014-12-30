@@ -5,7 +5,7 @@ BIN = ./node_modules/.bin
 SRC = $(shell find ./app -type f -name '*.js')
 
 test: lint
-	@$(BIN)/karma start --single-run
+	@NODE_ENV=test $(BIN)/karma start --single-run
 
 bootstrap: bootstrap-blink package.json
 	@npm install
@@ -13,9 +13,8 @@ bootstrap: bootstrap-blink package.json
 bootstrap-blink:
 	@git submodule update --init
 
-
 test-watch: lint
-	@$(BIN)/karma start
+	@NODE_ENV=test $(BIN)/karma start
 
 lint: bootstrap clean
 	@$(BIN)/jsxcs $(SRC);

@@ -23,6 +23,9 @@ var ActionStore = Marty.createStore({
       verbose: false
     });
   },
+  getActionById: function (id) {
+    return this.state[id];
+  },
   getSelectedAction: function () {
     return _.find(this.state, {
       selected: true

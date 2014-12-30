@@ -1,21 +1,27 @@
-var shimConsole = require('./chrome/shimConsole');
-var MartyPanel = require('./components/martyPanel');
-var connection = require('./chrome/backgroundConnection');
-var ActionActionCreators = require('./actions/actionActionCreators');
+if (process.env.NODE_ENV !== 'test') {
+  start();
+}
 
-shimConsole(window.console);
+function start() {
+  var shimConsole = require('./chrome/shimConsole');
+  var MartyPanel = require('./components/martyPanel');
+  var connection = require('./chrome/backgroundConnection');
+  var ActionActionCreators = require('./actions/actionActionCreators');
 
-connection.start();
+  shimConsole(window.console);
 
-connection.on('ACTION_DISPATCHED', function (e) {
-  ActionActionCreators.upsertAction(e.action);
-});
+  connection.start();
 
-connection.on('PAGE_UNLOAD', function () {
-  ActionActionCreators.clearActions();
-});
+  connection.on('ACTION_DISPATCHED', function (e) {
+    ActionActionCreators.upsertAction(e.action);
+  });
 
-var panel = new MartyPanel();
-panel.markAsRoot();
-panel.show(document.getElementById('main-panel-holder'));
-WebInspector.installPortStyles();
+  connection.on('PAGE_UNLOAD', function () {
+    ActionActionCreators.clearActions();
+  });
+
+  var panel = new MartyPanel();
+  panel.markAsRoot();
+  panel.show(document.getElementById('main-panel-holder'));
+  WebInspector.installPortStyles();
+}

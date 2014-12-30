@@ -4,16 +4,19 @@ module.exports = function (config) {
     frameworks: ['mocha', 'browserify'],
     browserify: {
       debug: true,
-      transform: ['reactify']
+      transform: ['reactify', 'envify']
     },
     files: [
+      'blink/Source/devtools/front_end/inspector.js',
+      'blink/Source/devtools/front_end/Object.js',
+      'blink/Source/devtools/front_end/View.js',
       'app/**.js',
-      'test/**/*.js'
+      'test/*.js',
     ],
     preprocessors: {
       'app/*.js': ['browserify'],
       'app/*[!chrome]/**/*.js': ['browserify'],
-      'test/**/*.js': ['browserify']
+      'test/*.js': ['browserify']
     },
     port: 9876,
     logLevel: config.LOG_INFO,
