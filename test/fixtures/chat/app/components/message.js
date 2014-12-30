@@ -12,6 +12,7 @@ var MessageState = Marty.createStateMixin({
 });
 
 var Message = React.createClass({
+  name: 'Message',
   mixins: [MessageState],
   render: function () {
     return this.state.message.when({

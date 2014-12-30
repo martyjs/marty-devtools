@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "marty": "0.5.x",
+    "marty": "0.7.x",
     "lodash": "2.4.1",
     "react": "^0.12.1",
     "react-router": "^0.11.4"
@@ -29,12 +29,6 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-exorcise": "^0.2.0",
     "grunt-nodemon": "^0.3.0",
-    "grunt-karma": "0.9.0",
-    "karma": "^0.12.28",
-    "karma-bro": "0.10.0",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-spec-reporter": "0.0.13",
-    "karma-mocha": "^0.1.10",
     "mocha": "^2.0.1",
     "morgan": "~1.5.0",
     "reactify": "^0.17.1",
