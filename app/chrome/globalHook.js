@@ -1,4 +1,4 @@
-var version = '';
+var version = '0.7.1';
 
 window.addEventListener('beforeunload', onUnload);
 window.addEventListener('message', onMessageFromPage);
