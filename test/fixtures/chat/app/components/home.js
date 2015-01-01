@@ -17,7 +17,6 @@ var HomeState = Marty.createStateMixin({
 });
 
 var Home = React.createClass({
-  name: 'Home',
   mixins: [HomeState],
   render: function () {
     return (

@@ -1,6 +1,6 @@
 {
   "name": "marty-devtools",
-  "version": "0.0.0",
+  "version": "0.7.0",
   "description": "Chrome Developer Tools for marty.js",
   "main": "background.js",
   "scripts": {
