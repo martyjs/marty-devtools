@@ -1,19 +1,27 @@
 {
   "name": "Marty Developer Tools",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "Developer tools for Marty",
   "devtools_page": "app/chrome/devtools.html",
   "manifest_version": 2,
   "background": {
-    "scripts": ["app/chrome/background.js"]
+    "scripts": [
+      "app/chrome/background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["app/chrome/globalHook.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "app/chrome/globalHook.js"
+      ],
       "run_at": "document_start"
     }
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "web_accessible_resources": ["app/*"]
+  "web_accessible_resources": [
+    "app/*"
+  ]
 }
