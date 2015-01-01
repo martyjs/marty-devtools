@@ -1,4 +1,4 @@
-
+var version = '';
 
 window.addEventListener('beforeunload', onUnload);
 window.addEventListener('message', onMessageFromPage);

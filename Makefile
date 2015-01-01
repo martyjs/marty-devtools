@@ -1,6 +1,6 @@
 BIN = ./node_modules/.bin
 
-.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chat;
+.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chat build;
 
 SRC = $(shell find ./app -type f -name '*.js')
 
@@ -20,11 +20,11 @@ lint: bootstrap clean
 	@$(BIN)/jsxcs $(SRC);
 	@$(BIN)/jsxhint $(SRC);
 
-release: test build
-	@git add dist && (git diff --exit-code > /dev/null || git commit -m "Rebuilding source")
-	@npm version patch
-	@git push origin master && git push --tags
-	@npm publish
+release:
+	@sh ./build/release.sh
+
+zip:
+	@zip -r dist/marty-devtools.zip app dist/app.js blink manifest.json LICENSE
 
 build:
 	@mkdir -p dist

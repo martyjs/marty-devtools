@@ -42,7 +42,8 @@
     "reactify": "^0.14.0",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.5.0",
-    "watchify": "^2.1.1"
+    "watchify": "^2.1.1",
+    "semver": "^4.2.0"
   },
   "browserify-shim": {
     "chrome": "global:chrome",
