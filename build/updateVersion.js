@@ -5,9 +5,9 @@ var join = require('path').join;
 var inc = process.env.inc || 'patch';
 var version = semver.inc(require('../package.json').version, inc);
 
-console.log(version)
+console.log(version);
 
-updateConfig('../package.json');
+['../manifest.json', '../package.json'].forEach(updateConfig);
 ['../app/index.js', '../app/chrome/globalHook.js'].forEach(updateJs);
 
 function updateJs(path) {
