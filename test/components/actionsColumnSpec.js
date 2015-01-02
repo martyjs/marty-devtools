@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var ActionsColumn = require('../pageObjects/actionsColumnPageObject');
 
-describe.only('ActionsColumn', function () {
+describe('ActionsColumn', function () {
   var column, actions;
 
   beforeEach(function () {
@@ -24,7 +24,7 @@ describe.only('ActionsColumn', function () {
 
   it('should show the action type', function () {
     var actualTypes = column.list.items.map(function (item) {
-      return item.type;
+      return item.type.value;
     });
 
     var expectedTypes = actions.map(function (action) {

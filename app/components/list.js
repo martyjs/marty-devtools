@@ -23,7 +23,7 @@ var List = React.createClass({
 
       i++;
 
-      return <li className={classes}>{child}</li>;
+      return <li className={classes} ref='item'>{child}</li>;
     });
   }
 });

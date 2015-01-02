@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 
 var PageObject = require('react-page-objects');
+var TextPageObject = require('./textPageObject');
 
 var ActionsListItemPageObject = PageObject.extend({
   elements: {
-    type: PageObject,
-    action: PageObject
+    type: TextPageObject,
+    action: TextPageObject
   },
   click: function () {
     this.action.click();

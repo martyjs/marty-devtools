@@ -6,7 +6,7 @@ var ActionActionCreators = require('../actions/actionActionCreators');
 var ActionListItem = React.createClass({
   render: function () {
     return (
-      <div ref="action" className='action' onClick={this.onClick}>
+      <div ref='item' className='action-list-item' onClick={this.onClick}>
         <span ref='type' className='action-type'>{this.props.action.type}</span>
       </div>
     );

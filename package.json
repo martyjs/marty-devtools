@@ -32,7 +32,7 @@
     "envify": "^3.2.0",
     "jsxcs": "0.0.3",
     "jsxhint": "^0.4.14",
-    "karma": "^0.12.24",
+    "karma": "0.12.24",
     "karma-bro": "^0.10.0",
     "karma-chrome-launcher": "^0.1.5",
     "karma-cli": "0.0.4",
