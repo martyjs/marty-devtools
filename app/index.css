@@ -1,10 +1,10 @@
-.action-list-container {
+.list-container {
   flex-grow: 1;
   overflow: scroll;
   height: 100%;
 }
 
-.action-list {
+.list {
   font-size: 11px;
   line-height: 120%;
   list-style-type: none;
@@ -19,11 +19,11 @@
   border-left: 1px solid #aaa;
 }
 
-.action-handler .action-list {
+.action-handler .list {
   border-left: none;
 }
 
-.action-list-item {
+.list-item {
   line-height: 17px;
   height: 41px;
   padding: 1px 4px;
@@ -32,15 +32,15 @@
   cursor: pointer;
 }
 
-.action-list-item.alt {
+.list-item.alt {
   background-color: rgb(238, 238, 238);
 }
 
-.action-list-item:hover {
+.list-item:hover {
   text-decoration: underline;
 }
 
-.action-list-item.selected {
+.list-item.selected {
   background-color: rgb(56, 121, 217);
   color: white;
 }

@@ -11,12 +11,12 @@ module.exports = function (config) {
       'blink/Source/devtools/front_end/Object.js',
       'blink/Source/devtools/front_end/View.js',
       'app/**.js',
-      'test/*.js',
+      'test/**/*.js'
     ],
     preprocessors: {
       'app/*.js': ['browserify'],
-      'app/*[!chrome]/**/*.js': ['browserify'],
-      'test/*.js': ['browserify']
+      'test/**/*.js': ['browserify'],
+      'app/*[!chrome]/**/*.js': ['browserify']
     },
     port: 9876,
     logLevel: config.LOG_INFO,

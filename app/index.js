@@ -1,4 +1,4 @@
-var version = '0.7.2';
+// var version = '0.7.2';
 
 if (process.env.NODE_ENV !== 'test') {
   start();

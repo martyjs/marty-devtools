@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var ActionPanel = require('./actionPanel');
+var DataFlowExplorer = require('./dataFlowExplorer');
 
 function MartyPanel() {
   WebInspector.View.call(this);
@@ -38,7 +38,7 @@ function MartyPanel() {
     this.sidebarResized.bind(this)
   );
 
-  React.render(<ActionPanel />, this.splitView.mainElement);
+  React.render(<DataFlowExplorer />, this.splitView.mainElement);
 }
 
 MartyPanel.prototype = {

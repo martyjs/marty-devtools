@@ -39,11 +39,13 @@
     "karma-mocha": "^0.1.9",
     "karma-spec-reporter": "0.0.13",
     "mocha": "^1.21.4",
+    "react-page-objects": "^0.2.0",
     "reactify": "^0.14.0",
+    "semver": "^4.2.0",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.5.0",
-    "watchify": "^2.1.1",
-    "semver": "^4.2.0"
+    "underscore": "^1.7.0",
+    "watchify": "^2.1.1"
   },
   "browserify-shim": {
     "chrome": "global:chrome",

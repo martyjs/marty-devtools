@@ -8,6 +8,8 @@ var ActionStore = require('../stores/actionStore');
 var ActionHandlerPanel = require('./actionHandlerPanel');
 var ActionActionCreators = require('../actions/actionActionCreators');
 
+var List = require('./list');
+
 var ActionPanelState = Marty.createStateMixin({
   listenTo: ActionStore,
   getState: function () {
@@ -46,9 +48,11 @@ var ActionPanel = React.createClass({
   render: function () {
     return (
       <div className='action-panel hbox fill'>
-        {this.actions()}
-        {this.actionHandlers()}
-        {this.actionHandler()}
+        <List>
+          <div>foo</div>
+          <div>bar</div>
+          <div>baz</div>
+        </List>
       </div>
     );
   },
