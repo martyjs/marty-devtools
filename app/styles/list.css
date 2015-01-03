@@ -12,15 +12,6 @@
   padding: 0;
   height: 100%;
   width: 100%;
-  border-left: 1px solid #aaa;
-}
-
-.action-handler {
-  border-left: 1px solid #aaa;
-}
-
-.action-handler .list {
-  border-left: none;
 }
 
 .list-item {
@@ -43,14 +34,4 @@
 .list-item.selected {
   background-color: rgb(56, 121, 217);
   color: white;
-}
-
-.object-tree {
-  display: block;
-  margin: 0;
-  position: relative;
-}
-
-.object-tree .header-value {
-  margin-right: 0 !importan;
 }

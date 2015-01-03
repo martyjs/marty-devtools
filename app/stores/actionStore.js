@@ -12,7 +12,7 @@ var ActionStore = Marty.createStore({
     toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER
   },
   getInitialState: function () {
-    return {};
+    return mockActions();
   },
   clearActions: function () {
     this.clear();
@@ -76,4 +76,32 @@ var ActionStore = Marty.createStore({
   }
 });
 
+function mockActions() {
+  var actions = {};
+
+  for (var i = 0; i < 100; i++) {
+    var action = mockAction(i);
+
+    actions[action.id] = action;
+  }
+
+  return actions;
+
+  function mockAction(id) {
+    return {
+      id: id,
+      verbose: false,
+      type: 'CREATE_FOO',
+      handlers: [{
+        id: id + '-foo',
+        store: 'FooStore',
+        name: 'addFoo',
+      }, {
+        id: id + '-bar',
+        store: 'BarStore',
+        name: 'addBar',
+      }]
+    };
+  }
+}
 module.exports = ActionStore;

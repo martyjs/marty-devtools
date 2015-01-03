@@ -1,0 +1,20 @@
+.split-columns {
+  height: 100%;
+}
+
+.split-column {
+  height: 100%;
+  float: left;
+  position: relative;
+  border-right: 1px solid #aaa;
+}
+
+.split-column-resizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 5px;
+  z-index: 1500;
+  cursor: ew-resize;
+}

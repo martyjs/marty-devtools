@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Marty = require('marty');
+var SplitColumns = require('./splitColumns');
 var ActionsColumn = require('./actionsColumn');
 var ActionStore = require('../stores/actionStore');
 
@@ -21,7 +22,10 @@ var DataFlowExplorer = React.createClass({
   render: function () {
     return (
       <div className='data-flow-explorer hbox fill'>
-        <ActionsColumn ref="actions" actions={this.state.actions} />
+        <SplitColumns>
+          <ActionsColumn ref="actions" actions={this.state.actions} />
+          <ActionsColumn ref="action-handlers" actions={this.state.actions} />
+        </SplitColumns>
       </div>
     );
   }

@@ -22,9 +22,10 @@
   },
   "homepage": "https://github.com/jhollingworth/marty-devtools",
   "dependencies": {
-    "react": "^0.12.1",
+    "lodash": "^2.4.1",
     "marty": "^0.7.x",
-    "lodash": "^2.4.1"
+    "react": "^0.12.1",
+    "react-draggable": "^0.4.0"
   },
   "devDependencies": {
     "browserify": "^5.12.0",
