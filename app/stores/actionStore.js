@@ -6,7 +6,8 @@ var statusMap = {
   'ACTION_STARTING': 'Pending',
   'ACTION_FAILED': 'Failed',
   'ACTION_DONE': 'Done'
-}
+};
+
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {

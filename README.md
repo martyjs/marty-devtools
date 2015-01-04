@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/jhollingworth/marty-devtools.svg?branch=master)](https://travis-ci.org/jhollingworth/marty-devtools)
+
+
 # Marty Chrome Developer Tools
 
 ## Development Quick Start
