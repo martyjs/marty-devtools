@@ -1,6 +1,6 @@
 BIN = ./node_modules/.bin
 
-.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chat build;
+.PHONY: bootstrap bootstrap-blink start clean test docs release-docs start-chat build devtools-build-watch;
 
 SRC = $(shell find ./app -type f -name '*.js')
 
@@ -28,11 +28,10 @@ zip:
 
 build:
 	@mkdir -p dist
-	@$(BIN)/browserify ./app/index.js -t reactify -o ./dist/app.js -d
+	@grunt build
 
 build-watch:
-	@mkdir -p dist
-	@$(BIN)/watchify ./app/index.js -o ./dist/app.js -v -t reactify -d
+	@grunt build-watch
 
 start-chat:
 	@mkdir -p ./test/fixtures/chat/dist

@@ -25,12 +25,16 @@
     "lodash": "^2.4.1",
     "marty": "^0.7.x",
     "react": "^0.12.1",
-    "react-draggable": "^0.4.0"
+    "when": "^3.6.4"
   },
   "devDependencies": {
     "browserify": "^5.12.0",
     "browserify-shim": "^3.7.0",
     "envify": "^3.2.0",
+    "load-grunt-tasks": "1.0.0",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.2.1",
+    "grunt-concurrent": "^1.0.0",
     "jsxcs": "0.0.3",
     "jsxhint": "^0.4.14",
     "karma": "0.12.24",

@@ -1,1 +1,0 @@
-chrome.devtools.panels.create('Marty', null, 'app/index.html');

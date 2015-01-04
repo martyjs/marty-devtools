@@ -3,7 +3,7 @@ var _ = require('underscore');
 var expect = require('chai').expect;
 var uuid = require('../lib/uuid').small;
 var ActionPayload = require('marty/actionPayload');
-var ActionStore = require('../../app/stores/actionStore');
+var ActionStore = require('../../app/panel/stores/actionStore');
 var inspect = _.partial(require('util').inspect, _, { depth: null, color: true }) // jshint ignore:line
 
 describe('ActionStore', function () {

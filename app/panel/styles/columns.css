@@ -19,11 +19,10 @@
   cursor: ew-resize;
 }
 
-.actions-column .action-status {
-  color: #666;
-  font-size: 9px;
-}
-
 .action-failed, .action-failed .action-status {
   color: #E60000;
+}
+
+.actions-column .action-status {
+  font-size: 9px;
 }

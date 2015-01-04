@@ -1,12 +1,36 @@
 // from https://developer.chrome.com/extensions/devtools
 
+var sow = {};
 var connections = {};
+var connectedToMarty = false;
+
+function processMessage(message) {
+  if (message.type === 'DISPATCHING_ACTION') {
+    var action = message.payload.action.arguments[0];
+
+    switch (action.type) {
+      case 'ACTION_STARTING':
+        action.status = 'PENDING';
+        sow.actions[action.id] = action;
+        break;
+      case 'ACTION_FAILED':
+        sow.actions[action.id].status = 'FAILED';
+        sow.actions[action.id].error = action.error;
+        break;
+      case 'ACTION_DONE':
+        sow.actions[action.id].status = 'DONE';
+        break;
+    }
+  }
+}
 
 chrome.runtime.onConnect.addListener(function (port) {
 
   var extensionListener = function (message) {
     switch (message.type) {
-      case 'init': connections[message.tabId] = port; break;
+      case 'init':
+        connections[message.tabId] = port;
+        break;
     }
   };
 
@@ -35,3 +59,5 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
   return true;
 });
+
+

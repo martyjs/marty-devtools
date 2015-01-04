@@ -31,7 +31,7 @@
   text-decoration: underline;
 }
 
-.list-item.selected {
+.list-container > .list > .list-item.active {
   background-color: rgb(56, 121, 217);
   color: white;
 }

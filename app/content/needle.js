@@ -21,20 +21,26 @@ function jsToInject() {
     }
 
     function listenToMarty(Marty) {
+      postMessage('CONNECTED_TO_MARTY');
+
       Marty.Dispatcher.register(onActionDispatched);
 
       function onActionDispatched(action) {
-        var message = {
-          type: 'ACTION_DISPATCHED',
-          target: 'devtools-page',
-          source: 'marty-extension',
-          payload: {
-            action: action.toJSON()
-          }
-        };
-
-        window.postMessage(message, '*');
+        postMessage('ACTION_DISPATCHED', { action: action.toJSON() });
       }
+    }
+
+    function postMessage(type, payload) {
+      window.postMessage(message(type, payload), '*');
+    }
+
+    function message(type, payload) {
+      return {
+        type: type,
+        target: 'devtools-page',
+        source: 'marty-extension',
+        payload: payload || {}
+      };
     }
   };
 

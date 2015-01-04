@@ -1,18 +1,11 @@
 // var version = '0.7.2';
 
-if (process.env.NODE_ENV !== 'test') {
-  start();
-}
-
-function start() {
+function initialize(connection) {
   var shimConsole = require('./chrome/shimConsole');
   var MartyPanel = require('./components/martyPanel');
-  var connection = require('./chrome/backgroundConnection');
   var ActionActionCreators = require('./actions/actionActionCreators');
 
   shimConsole(window.console);
-
-  connection.start();
 
   connection.on('ACTION_DISPATCHED', function (e) {
     ActionActionCreators.upsertAction(e.action);
@@ -27,3 +20,5 @@ function start() {
   panel.show(document.getElementById('main-panel-holder'));
   WebInspector.installPortStyles();
 }
+
+window.initialize = initialize
