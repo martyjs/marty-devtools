@@ -14,8 +14,8 @@ function MartyPanel() {
   var minimumContentHeightPercent = 0.34;
 
   this.element.classList.add('vbox', 'fill');
-  this.registerRequiredCSS('networkLogView.css');
-  this.registerRequiredCSS('filter.css');
+  this.registerRequiredCSS('../blink/Source/devtools/front_end/networkLogView.css');
+  this.registerRequiredCSS('../blink/Source/devtools/front_end/filter.css');
   this.createSidebarView(
     this.element,
     WebInspector.SidebarView.SidebarPosition.End,
