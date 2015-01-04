@@ -1,7 +1,12 @@
 var _ = require('lodash');
+var util = require('util');
 var Marty = require('marty');
 var ActionConstants = require('../constants/actionConstants');
-
+var statusMap = {
+  'ACTION_STARTING': 'Pending',
+  'ACTION_FAILED': 'Failed',
+  'ACTION_DONE': 'Done'
+}
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
@@ -12,16 +17,14 @@ var ActionStore = Marty.createStore({
     toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER
   },
   getInitialState: function () {
-    return mockActions();
+    return {};
   },
   clearActions: function () {
     this.clear();
     this.hasChanged();
   },
   getAll: function () {
-    return _.where(_.values(this.state), {
-      verbose: false
-    });
+    return _.sortBy(_.values(this.state), 'timestamp').reverse();
   },
   getActionById: function (id) {
     return this.state[id];
@@ -32,8 +35,20 @@ var ActionStore = Marty.createStore({
     });
   },
   upsertAction: function (action) {
-    action.timestamp = new Date(action.timestamp);
-    this.state[action.id] = action;
+    var subject = action.arguments[0];
+    var currentState = this.state[subject.id];
+
+    if (subject.timestamp) {
+      subject.timestamp = new Date(subject.timestamp);
+    }
+
+    if (action.type !== 'ACTION_STARTING' && !currentState) {
+      throw new Error(util.format('Unknown action %s (%s)', subject.id, subject.type));
+    }
+
+    this.state[subject.id] = _.extend(currentState || {}, subject, {
+      status: statusMap[action.type]
+    });
     this.hasChanged();
   },
   getSelectedActionHandler: function () {
@@ -76,32 +91,4 @@ var ActionStore = Marty.createStore({
   }
 });
 
-function mockActions() {
-  var actions = {};
-
-  for (var i = 0; i < 100; i++) {
-    var action = mockAction(i);
-
-    actions[action.id] = action;
-  }
-
-  return actions;
-
-  function mockAction(id) {
-    return {
-      id: id,
-      verbose: false,
-      type: 'CREATE_FOO',
-      handlers: [{
-        id: id + '-foo',
-        store: 'FooStore',
-        name: 'addFoo',
-      }, {
-        id: id + '-bar',
-        store: 'BarStore',
-        name: 'addBar',
-      }]
-    };
-  }
-}
 module.exports = ActionStore;

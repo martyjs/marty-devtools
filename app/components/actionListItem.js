@@ -5,9 +5,16 @@ var ActionActionCreators = require('../actions/actionActionCreators');
 
 var ActionListItem = React.createClass({
   render: function () {
+    var action = this.props.action;
+    var classes = [
+      'action-list-item',
+      'action-' + action.status.toLowerCase()
+    ].join(' ');
+
     return (
-      <div ref='item' className='action-list-item' onClick={this.onClick}>
-        <span ref='type' className='action-type'>{this.props.action.type}</span>
+      <div ref='item' className={classes} onClick={this.onClick}>
+        <div ref='type' className='action-type'>{action.type}</div>
+        <div ref='status' className='action-status'>{action.status}</div>
       </div>
     );
   },

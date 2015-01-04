@@ -7,10 +7,12 @@ describe('ActionsColumn', function () {
   beforeEach(function () {
     actions = [{
       id: 1,
-      type: 'FOO'
+      type: 'FOO',
+      status: 'Done'
     }, {
       id: 2,
-      type: 'BAR'
+      type: 'BAR',
+      status: 'Done'
     }];
 
     column = new ActionsColumn({
