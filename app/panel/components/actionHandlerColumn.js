@@ -10,12 +10,21 @@ var ActionHandlerColumn = React.createClass({
     return (
       <Column name='action-handler'>
         <List ref='list'>
-          {this.props.actionHandler.views.map(function (view) {
+          {this.views().map(function (view) {
             return <ViewListItem view={view} />;
           })}
         </List>
       </Column>
     );
+  },
+  views: function () {
+    var handler = this.props.actionHandler;
+
+    if (handler) {
+      return handler.views;
+    }
+
+    return [];
   }
 });
 

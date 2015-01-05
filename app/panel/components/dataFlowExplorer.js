@@ -5,6 +5,8 @@ var Marty = require('marty');
 var SplitColumns = require('./splitColumns');
 var ActionsColumn = require('./actionsColumn');
 var ActionStore = require('../stores/actionStore');
+var ActionHandlerColumn = require('./actionHandlerColumn');
+var ActionHandlersColumn = require('./actionHandlersColumn');
 
 var DataFlowExplorerState = Marty.createStateMixin({
   listenTo: ActionStore,
@@ -24,7 +26,8 @@ var DataFlowExplorer = React.createClass({
       <div className='data-flow-explorer hbox fill'>
         <SplitColumns>
           <ActionsColumn ref="actions" actions={this.state.actions} />
-          <ActionsColumn ref="action-handlers" actions={this.state.actions} />
+          <ActionHandlersColumn ref="actionHandlers" action={this.state.selectedAction} />
+          <ActionHandlerColumn ref="actionHandler" actionHandler={this.state.selectedActionHandler} />
         </SplitColumns>
       </div>
     );

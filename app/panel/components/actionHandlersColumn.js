@@ -20,6 +20,7 @@ var ActionHandlersColumn = React.createClass({
     );
   },
   handlers: function () {
+    console.log('selected action', this.props.action);
     if (this.props.action) {
       return this.props.action.handlers;
     }
