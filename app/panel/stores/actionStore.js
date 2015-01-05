@@ -29,7 +29,7 @@ var ActionStore = Marty.createStore({
   applicationLoaded: function (sow) {
     var actions = {};
     _.each(sow.actions, function (action) {
-      actionId[action.id] = action;
+      actions[action.id] = action;
     });
 
     this.state = actions;

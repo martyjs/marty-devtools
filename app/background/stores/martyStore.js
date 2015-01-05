@@ -12,7 +12,7 @@ var MartyStore = Marty.createStore({
   },
   martyFoundInTab: function (tabId) {
     this.state[tabId] = true;
-    this.hasChanged();
+    this.hasChanged(tabId);
   }
 });
 

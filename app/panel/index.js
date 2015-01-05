@@ -13,7 +13,7 @@ function initialize(options) {
     ActionActionCreators.upsertAction(action);
   });
 
-  connection.on('PAGE_UNLOAD', function () {
+  connection.on('CLEAR_ACTIONS', function () {
     ActionActionCreators.clearActions();
   });
 

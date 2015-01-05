@@ -4,54 +4,16 @@ window.addEventListener('beforeunload', onUnload);
 window.addEventListener('message', onMessageFromPage);
 
 var script = document.createElement('script');
-script.textContent = jsToInject();
+script.type = 'text/javascript';
+script.src = chrome.extension.getURL('app/content/martyObserver.js');
+script.onload = function () {
+  script.parentNode.removeChild(script);
+};
 document.documentElement.appendChild(script);
-script.parentNode.removeChild(script);
-
-function jsToInject() {
-  var connectToMarty = function (window) {
-    tryAndFindMarty();
-
-    function tryAndFindMarty() {
-      if (window.Marty) {
-        listenToMarty(window.Marty);
-      } else {
-        setTimeout(tryAndFindMarty, 1);
-      }
-    }
-
-    function listenToMarty(Marty) {
-      postMessage('MARTY_FOUND');
-
-      Marty.Dispatcher.register(onActionDispatched);
-
-      function onActionDispatched(action) {
-        postMessage('ACTION_DISPATCHED', { action: action.toJSON() });
-      }
-    }
-
-    function postMessage(type, payload) {
-      window.postMessage(message(type, payload), '*');
-    }
-
-    function message(type, payload) {
-      return {
-        type: type,
-        target: 'devtools-page',
-        source: 'marty-extension',
-        payload: payload || {}
-      };
-    }
-  };
-
-  return '(' + connectToMarty.toString() + ')(window)';
-}
 
 function onUnload() {
   chrome.runtime.sendMessage({
-    target: 'devtools-page',
-    source: 'marty-extension',
-    type: 'PAGE_UNLOAD'
+    type: 'PAGE_UNLOADED'
   });
 }
 

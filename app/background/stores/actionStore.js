@@ -11,22 +11,36 @@ var statusMap = {
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
+    clearActionsForTab: ActionConstants.CLEAR_ACTIONS,
     upsertAction: ActionConstants.PROCESS_DISPATCHED_ACTION,
   },
   getInitialState: function () {
     return {};
   },
   getActionsForTab: function (tabId) {
-    return _.find(_.values(this.state), {
+    return _.where(_.values(this.state), {
       tabId: tabId
     });
   },
   getActionById: function (actionId) {
     return this.state[actionId];
   },
+  clearActionsForTab: function (tabId) {
+    _.each(this.state, function (action, id) {
+      if (action.tabId === tabId) {
+        delete this.state[id];
+      }
+    }, this);
+
+    this.hasChanged();
+  },
   upsertAction: function (tabId, action) {
     var subject = action.arguments[0];
     var currentState = this.state[subject.id];
+
+    if (_.keys(statusMap).indexOf(action.type) === -1) {
+      return;
+    }
 
     if (subject.timestamp) {
       subject.timestamp = new Date(subject.timestamp);
@@ -41,7 +55,7 @@ var ActionStore = Marty.createStore({
       status: statusMap[action.type]
     });
 
-    this.hasChanged(action);
+    this.hasChanged(this.state[subject.id]);
   }
 });
 

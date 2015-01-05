@@ -20,7 +20,11 @@ function DevtoolsPageConnection() {
 
   function send(tabId, message) {
     if (tabId in connections) {
-      connections[tabId].postMessage(message);
+      try {
+        connections[tabId].postMessage(message);
+      } catch (e) {
+        console.warn(e);
+      }
     }
   }
 

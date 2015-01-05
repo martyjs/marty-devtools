@@ -16,6 +16,12 @@ inspectedWindow.onMessage(function (tabId, message) {
     case 'MARTY_FOUND':
       MartyActionCreators.martyFoundInTab(tabId);
       break;
+    case 'PAGE_UNLOADED':
+      ActionActionCreators.clearActions(tabId);
+      devtools.send(tabId, {
+        type: 'CLEAR_ACTIONS'
+      });
+      break;
     default:
       console.log('Unknown message', message.type);
       break;
@@ -39,6 +45,10 @@ MartyStore.addChangeListener(function (state, store, tabId) {
 });
 
 ActionStore.addChangeListener(function (state, store, action) {
+  if (!action) {
+    return;
+  }
+
   devtools.send(action.tabId, {
     type: 'UPSERT_ACTION',
     payload: action
