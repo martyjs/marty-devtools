@@ -44,11 +44,11 @@ function DevtoolsPageConnection() {
   }
 
   function onMessageFromDevtools(port, message) {
-    if (message.type === 'init') {
+    if (message.type === 'INITIALIZE') {
       connections[message.tabId] = port;
-    } else if (!sender.tab) {
-      emitter.emit(MESSAGE, message);
     }
+
+    events.emit(MESSAGE, message);
   }
 
   function onDisconnect(port) {

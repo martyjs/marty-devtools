@@ -1,15 +1,16 @@
 var sinon = require('sinon');
 var _ = require('underscore');
 var expect = require('chai').expect;
-var uuid = require('../lib/uuid').small;
+var uuid = require('../../lib/uuid').small;
 var ActionPayload = require('marty/actionPayload');
-var ActionStore = require('../../app/panel/stores/actionStore');
+var ActionStore = require('../../../app/background/stores/actionStore');
 var inspect = _.partial(require('util').inspect, _, { depth: null, color: true }) // jshint ignore:line
 
 describe('ActionStore', function () {
-  var listener, expectedId, expectedAction, expectedActionType, actualAction;
+  var listener, tabId, expectedId, expectedAction, expectedActionType, actualAction;
 
   beforeEach(function () {
+    tabId = 1;
     expectedId = '1';
     listener = sinon.spy();
     expectedActionType = 'TEST_ACTION';
@@ -20,6 +21,7 @@ describe('ActionStore', function () {
       beforeEach(function () {
         ActionStore.addChangeListener(listener);
         expectedAction = _.extend(actionStarting(expectedActionType), {
+          tabId: tabId,
           status: 'Pending'
         });
         actualAction = ActionStore.getActionById(expectedAction.id);
@@ -39,6 +41,7 @@ describe('ActionStore', function () {
 
       beforeEach(function () {
         expectedAction = _.extend(actionStarting(expectedActionType), {
+          tabId: tabId,
           status: 'Done'
         });
         ActionStore.addChangeListener(listener);
@@ -61,6 +64,7 @@ describe('ActionStore', function () {
       beforeEach(function () {
         expectedError = new Error('foo');
         expectedAction = _.extend(actionStarting(expectedActionType), {
+          tabId: tabId,
           status: 'Failed',
           error: expectedError
         });
@@ -101,8 +105,8 @@ describe('ActionStore', function () {
 
     function upsertAction(actionType, action) {
       dispatch({
-        type: 'UPSERT_ACTION',
-        arguments: [{
+        type: 'PROCESS_DISPATCHED_ACTION',
+        arguments: [tabId, {
           id: uuid(),
           type: actionType,
           arguments: [action]

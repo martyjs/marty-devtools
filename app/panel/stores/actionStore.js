@@ -2,6 +2,7 @@ var _ = require('lodash');
 var util = require('util');
 var Marty = require('marty');
 var ActionConstants = require('../constants/actionConstants');
+var ApplicationConstants = require('../constants/applicationConstants');
 var statusMap = {
   'ACTION_STARTING': 'Pending',
   'ACTION_FAILED': 'Failed',
@@ -15,13 +16,23 @@ var ActionStore = Marty.createStore({
     upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
     toggleViewHandler: ActionConstants.TOGGLE_VIEW_HANDLER,
-    toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER
+    toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER,
+    applicationLoaded: ApplicationConstants.APPLICATION_LOADED
   },
   getInitialState: function () {
     return {};
   },
   clearActions: function () {
     this.clear();
+    this.hasChanged();
+  },
+  applicationLoaded: function (sow) {
+    var actions = {};
+    _.each(sow.actions, function (action) {
+      actionId[action.id] = action;
+    });
+
+    this.state = actions;
     this.hasChanged();
   },
   getAll: function () {
@@ -36,20 +47,7 @@ var ActionStore = Marty.createStore({
     });
   },
   upsertAction: function (action) {
-    var subject = action.arguments[0];
-    var currentState = this.state[subject.id];
-
-    if (subject.timestamp) {
-      subject.timestamp = new Date(subject.timestamp);
-    }
-
-    if (action.type !== 'ACTION_STARTING' && !currentState) {
-      throw new Error(util.format('Unknown action %s (%s)', subject.id, subject.type));
-    }
-
-    this.state[subject.id] = _.extend(currentState || {}, subject, {
-      status: statusMap[action.type]
-    });
+    this.state[action.id] = action;
     this.hasChanged();
   },
   getSelectedActionHandler: function () {

@@ -21,7 +21,7 @@ function jsToInject() {
     }
 
     function listenToMarty(Marty) {
-      postMessage('CONNECTED_TO_MARTY');
+      postMessage('MARTY_FOUND');
 
       Marty.Dispatcher.register(onActionDispatched);
 

@@ -1,10 +1,9 @@
 var EventEmitter = require('events').EventEmitter;
 var connection, emitter = new EventEmitter();
 var when = require('when');
-var started;
 
 emitter.start = function () {
-  return started || (started = when.promise(function (resolve, reject) {
+  return when.promise(function (resolve, reject) {
     if (!window.chrome.devtools) {
       throw new Error('Cannot connect to background connection out side of devtools page');
     }
@@ -14,28 +13,30 @@ emitter.start = function () {
     });
 
     connection.postMessage({
-      type: 'init',
+      type: 'INITIALIZE',
       tabId: chrome.devtools.inspectedWindow.tabId
     });
 
     connection.onMessage.addListener(function (message) {
-      if (message.type === 'CONNECTED_TO_MARTY') {
-        window.localStorage.setItem('CONNECTED_TO_MARTY', true);
-        resolve();
-      } else {
-        console.log(message.type, message.payload);
-        emitter.emit(message.type, message.payload);
+      if (message.type === 'SOW') {
+        resolve(message.payload);
       }
-    });
 
-    if (isConnectedToMarty()) {
-      resolve();
-    }
-  }));
+      emitter.emit(message.type, message.payload);
+    });
+  });
 };
 
-function isConnectedToMarty() {
-  return !!window.localStorage.getItem('CONNECTED_TO_MARTY');
+function martyFound(message) {
+  if (message.type === 'MARTY_FOUND') {
+    return message.payload === true;
+  }
+
+  if (message.type === 'SOW') {
+    return message.payload.martyFound === true;
+  }
+
+  return false;
 }
 
 module.exports = emitter;

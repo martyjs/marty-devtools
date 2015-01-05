@@ -13,7 +13,7 @@ bootstrap: bootstrap-blink package.json
 bootstrap-blink:
 	@git submodule update --init
 
-test-watch: lint
+test-watch:
 	@NODE_ENV=test $(BIN)/karma start
 
 lint: bootstrap clean
