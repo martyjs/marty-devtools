@@ -11,8 +11,8 @@ var statusMap = {
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
-    clearActionsForTab: ActionConstants.CLEAR_ACTIONS,
-    upsertAction: ActionConstants.PROCESS_DISPATCHED_ACTION,
+    upsertAction: ActionConstants.UPSERT_ACTION,
+    clearActionsForTab: ActionConstants.CLEAR_ACTIONS
   },
   getInitialState: function () {
     return {};

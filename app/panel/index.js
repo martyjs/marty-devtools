@@ -3,6 +3,7 @@
 function initialize(options) {
   var connection = options.connection;
   var shimConsole = require('./chrome/shimConsole');
+  var StoreActionCreators = require('./actions/storeActionCreators');
   var ActionActionCreators = require('./actions/actionActionCreators');
   var ApplicationActionCreators = require('./actions/applicationActionCreators');
 
@@ -10,6 +11,10 @@ function initialize(options) {
 
   connection.on('UPSERT_ACTION', function (action) {
     ActionActionCreators.upsertAction(action);
+  });
+
+  connection.on('UPSERT_STORE', function (store) {
+    StoreActionCreators.upsertStore(store);
   });
 
   connection.on('CLEAR_ACTIONS', function () {

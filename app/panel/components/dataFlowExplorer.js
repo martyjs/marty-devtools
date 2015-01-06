@@ -4,13 +4,15 @@ var React = require('react');
 var Marty = require('marty');
 var SplitColumns = require('./splitColumns');
 var ActionsColumn = require('./actionsColumn');
+var StoreStore = require('../stores/storeStore');
 var ActionStore = require('../stores/actionStore');
 var ActionHandlerColumn = require('./actionHandlerColumn');
 var ActionHandlersColumn = require('./actionHandlersColumn');
 
 var DataFlowExplorerState = Marty.createStateMixin({
-  listenTo: ActionStore,
+  listenTo: [ActionStore, StoreStore],
   getState: function () {
+    console.log('store state', StoreStore.getState());
     return {
       actions: ActionStore.getAll(),
       selectedAction: ActionStore.getSelectedAction(),

@@ -18,14 +18,26 @@
   }
 
   function listenToMarty(Marty) {
-    postMessage('MARTY_FOUND');
+    postMessage('MARTY_FOUND', {
+      state: Marty.serializeState().toJSON()
+    });
 
+    Marty.addStoreChangeListener(onStoreChanged);
     Marty.Dispatcher.register(onActionDispatched);
 
-    function onActionDispatched(action) {
-      postMessage('ACTION_DISPATCHED', {
-        action: action.toJSON()
+    function onStoreChanged(state, store) {
+      if (store.serialize) {
+        state = store.serialize();
+      }
+
+      postMessage('STORE_CHANGED', {
+        displayName: store.displayName,
+        state: state
       });
+    }
+
+    function onActionDispatched(action) {
+      postMessage('ACTION_DISPATCHED', action.toJSON());
     }
   }
 

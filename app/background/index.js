@@ -1,17 +1,22 @@
 var sow = require('./sowForTab');
-var MartyStore = require('./stores/martyStore')
+var MartyStore = require('./stores/martyStore');
+var StoreStore = require('./stores/storeStore');
 var ActionStore = require('./stores/actionStore');
 var connectionHub = require('./stateSources/connectionHub');
-var ActionActionCreators = require('./actions/actionActionCreators');
+var StoreActionCreators = require('./actions/storeActionCreators');
 var MartyActionCreators = require('./actions/martyActionCreators');
+var ActionActionCreators = require('./actions/actionActionCreators');
 
 var devtools = connectionHub.devtools;
 var inspectedWindow = connectionHub.inspectedWindow;
 
 inspectedWindow.onMessage(function (tabId, message) {
   switch (message.type) {
+    case 'STORE_CHANGED':
+      StoreActionCreators.upsertStore(tabId, message.payload);
+      break;
     case 'ACTION_DISPATCHED':
-      ActionActionCreators.processDispatchedAction(tabId, message.payload.action);
+      ActionActionCreators.upsertAction(tabId, message.payload);
       break;
     case 'MARTY_FOUND':
       MartyActionCreators.martyFoundInTab(tabId);
@@ -35,6 +40,13 @@ devtools.onMessage(function (message) {
       payload: sow(message.tabId)
     });
   }
+});
+
+StoreStore.addChangeListener(function (state, store, store) {
+  devtools.send(store.tabId, {
+    type: 'UPSERT_STORE',
+    payload: store
+  });
 });
 
 MartyStore.addChangeListener(function (state, store, tabId) {
