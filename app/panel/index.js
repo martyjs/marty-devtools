@@ -3,7 +3,6 @@
 function initialize(options) {
   var connection = options.connection;
   var shimConsole = require('./chrome/shimConsole');
-  var MartyPanel = require('./components/martyPanel');
   var ActionActionCreators = require('./actions/actionActionCreators');
   var ApplicationActionCreators = require('./actions/applicationActionCreators');
 
@@ -19,6 +18,11 @@ function initialize(options) {
 
   ApplicationActionCreators.applicationLoaded(options.sow);
 
+  renderMartyPanel();
+}
+
+function renderMartyPanel() {
+  var MartyPanel = require('./components/martyPanel');
   var panel = new MartyPanel();
   panel.markAsRoot();
   panel.show(document.getElementById('main-panel-holder'));
@@ -26,3 +30,4 @@ function initialize(options) {
 }
 
 window.initialize = initialize
+window.renderMartyPanel = renderMartyPanel;
