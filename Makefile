@@ -4,6 +4,9 @@ BIN = ./node_modules/.bin
 
 SRC = $(shell find ./app -type f -name '*.js')
 
+build-watch:
+	@grunt build-watch
+
 test: lint
 	@NODE_ENV=test $(BIN)/karma start --single-run
 
@@ -29,9 +32,6 @@ zip:
 build:
 	@mkdir -p dist
 	@grunt build
-
-build-watch:
-	@grunt build-watch
 
 start-chat:
 	@mkdir -p ./test/fixtures/chat/dist

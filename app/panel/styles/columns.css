@@ -19,7 +19,7 @@
   cursor: ew-resize;
 }
 
-.action-failed, .action-failed .action-status {
+.action-failed, .action-failed div {
   color: #E60000;
 }
 
