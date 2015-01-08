@@ -15,14 +15,11 @@ StoresSidePanel.prototype = {
       return;
     }
 
-    var section = new WebInspector.ObjectPropertiesSection([
+    var section = new WebInspector.ObjectPropertiesSection(WebInspector.RemoteObject.fromPrimitiveValue([
       {
         name: "Test",
-        value: {
-          type: "string",
-          description: "Foo"
-        }
-      }]
+        value: "FOo"
+      }])
       ,
       "Title",
       '',
