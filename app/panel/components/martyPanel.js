@@ -1,7 +1,10 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var StoresStore = require('../stores/storeStore');
+var StoresSidePanel = require('./storesSidePanel');
 var DataFlowExplorer = require('./dataFlowExplorer');
+
 
 function MartyPanel() {
   WebInspector.View.call(this);
@@ -38,10 +41,31 @@ function MartyPanel() {
     this.sidebarResized.bind(this)
   );
 
+
+  this.sidebarPaneView = new WebInspector.SidebarPaneStack();
+  this.sidebarPanes = {
+    stores: new StoresSidePanel("Stores", "No stores", this.forceUpdate.bind(this))
+  };
+
+  this.sidebarPanes.stores.update({});
+  StoresStore.addChangeListener(function () {
+    this.sidebarPanes.stores.update(StoresStore.getState());
+  })
+
+  this.sidebarPanes.stores.expand();
+
+  for (var pane in this.sidebarPanes) {
+    this.sidebarPaneView.addPane(this.sidebarPanes[pane]);
+  }
+  this.sidebarPaneView.show(this.splitView.sidebarElement);
+
   React.render(<DataFlowExplorer />, this.splitView.mainElement);
 }
 
 MartyPanel.prototype = {
+  forceUpdate: function () {
+
+  },
   sidebarResized: function () {
   },
   createSidebarView: function (parentElement, position, defaultWidth, defaultHeight) {

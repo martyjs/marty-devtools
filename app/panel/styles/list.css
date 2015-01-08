@@ -21,6 +21,7 @@
   /*border-left: 1px solid rgb(210, 210, 210);*/
   vertical-align: middle;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .list-item.alt {
