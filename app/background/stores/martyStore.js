@@ -1,17 +1,17 @@
 var _ = require('lodash');
 var Marty = require('marty');
-var MartyConstants = require('../constants/martyConstants');
+var PageConstants = require('../constants/pageConstants');
 
 var MartyStore = Marty.createStore({
   displayName: 'Marty',
   handlers: {
-    martyFoundInTab: MartyConstants.MARTY_FOUND_IN_TAB
+    pageLoaded: PageConstants.PAGE_LOADED
   },
-  hasMartyBeenFound: function (tabId) {
+  hasMartyBeenFoundInTab: function (tabId) {
     return !!this.state[tabId];
   },
-  martyFoundInTab: function (tabId) {
-    this.state[tabId] = true;
+  pageLoaded: function (tabId, sow) {
+    this.state[tabId] = sow.martyFound;
     this.hasChanged(tabId);
   }
 });

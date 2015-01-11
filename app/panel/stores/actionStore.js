@@ -1,8 +1,8 @@
 var _ = require('lodash');
 var util = require('util');
 var Marty = require('marty');
+var PageConstants = require('../constants/pageConstants');
 var ActionConstants = require('../constants/actionConstants');
-var ApplicationConstants = require('../constants/applicationConstants');
 var statusMap = {
   'ACTION_STARTING': 'Pending',
   'ACTION_FAILED': 'Failed',
@@ -12,12 +12,12 @@ var statusMap = {
 var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
-    clearActions: ActionConstants.CLEAR_ACTIONS,
+    pageLoaded: PageConstants.PAGE_LOADED,
     upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
     toggleViewHandler: ActionConstants.TOGGLE_VIEW_HANDLER,
     toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER,
-    applicationLoaded: ApplicationConstants.APPLICATION_LOADED
+    clearActions: [ActionConstants.CLEAR_ACTIONS, PageConstants.PAGE_UNLOADED]
   },
   getInitialState: function () {
     return {};
@@ -26,7 +26,7 @@ var ActionStore = Marty.createStore({
     this.clear();
     this.hasChanged();
   },
-  applicationLoaded: function (sow) {
+  pageLoaded: function (sow) {
     var actions = {};
     _.each(sow.actions, function (action) {
       actions[action.id] = action;

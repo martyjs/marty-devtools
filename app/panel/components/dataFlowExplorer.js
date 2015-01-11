@@ -12,7 +12,6 @@ var ActionHandlersColumn = require('./actionHandlersColumn');
 var DataFlowExplorerState = Marty.createStateMixin({
   listenTo: [ActionStore, StoreStore],
   getState: function () {
-    console.log('store state', StoreStore.getState());
     return {
       actions: ActionStore.getAll(),
       selectedAction: ActionStore.getSelectedAction(),

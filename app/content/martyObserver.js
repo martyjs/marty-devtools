@@ -8,6 +8,9 @@
       listenToMarty(window.Marty);
     } else {
       if (time > TIMEOUT) {
+        postMessage('PAGE_LOADED', {
+          martyFound: false
+        });
         return;
       }
 
@@ -18,12 +21,17 @@
   }
 
   function listenToMarty(Marty) {
-    postMessage('MARTY_FOUND', {
-      state: Marty.serializeState().toJSON()
+    postMessage('PAGE_LOADED', {
+      martyFound: true,
+      stores: Marty.serializeState().toJSON()
     });
 
     Marty.addStoreChangeListener(onStoreChanged);
     Marty.Dispatcher.register(onActionDispatched);
+
+    function onActionDispatched(action) {
+      postMessage('ACTION_DISPATCHED', action.toJSON());
+    }
 
     function onStoreChanged(state, store) {
       if (store.serialize) {
@@ -34,10 +42,6 @@
         displayName: store.displayName,
         state: state
       });
-    }
-
-    function onActionDispatched(action) {
-      postMessage('ACTION_DISPATCHED', action.toJSON());
     }
   }
 

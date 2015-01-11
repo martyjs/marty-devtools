@@ -2,10 +2,12 @@
 
 function initialize(options) {
   var connection = options.connection;
-  var shimConsole = require('./chrome/shimConsole');
+  var StoreStore = require('./stores/storeStore');
+  var ActionStore = require('./stores/actionStore'); // jshint ignore:line
+  var shimConsole = require('./chrome/shimConsole'); // jshint ignore:line
+  var PageActionCreators = require('./actions/pageActionCreators');
   var StoreActionCreators = require('./actions/storeActionCreators');
   var ActionActionCreators = require('./actions/actionActionCreators');
-  var ApplicationActionCreators = require('./actions/applicationActionCreators');
 
   shimConsole(window.console);
 
@@ -17,11 +19,11 @@ function initialize(options) {
     StoreActionCreators.upsertStore(store);
   });
 
-  connection.on('CLEAR_ACTIONS', function () {
-    ActionActionCreators.clearActions();
+  connection.on('PAGE_LOADED', function (sow) {
+    PageActionCreators.pageLoaded(sow);
   });
 
-  ApplicationActionCreators.applicationLoaded(options.sow);
+  PageActionCreators.pageLoaded(options.sow);
 
   renderMartyPanel();
 }

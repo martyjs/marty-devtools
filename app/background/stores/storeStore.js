@@ -1,25 +1,35 @@
 var _ = require('lodash');
 var Marty = require('marty');
+var PageConstants = require('../constants/pageConstants');
 var StoreConstants = require('../constants/storeConstants');
 
 var StoreStore = Marty.createStore({
   displayName: 'Store',
   handlers: {
-    upsertStore: StoreConstants.UPSERT_STORE
+    pageLoaded: PageConstants.PAGE_LOADED,
+    upsertStore: StoreConstants.UPSERT_STORE,
+    clearStoreForTab: PageConstants.PAGE_UNLOADED,
   },
   getStoresForTab: function (tabId) {
     return this.state[tabId] || {};
+  },
+  clearStoreForTab: function (tabId) {
+    delete this.state[tabId];
+    this.hasChanged();
+  },
+  pageLoaded: function (tabId, sow) {
+    if (sow.stores) {
+      this.state[tabId] = sow.stores;
+      this.hasChanged();
+    }
   },
   upsertStore: function (tabId, store) {
     if (!this.state[tabId]) {
       this.state[tabId] = {};
     }
 
-    this.state[tabId][store.displayName] = _.extend(store, {
-      tabId: tabId
-    });
-
-    this.hasChanged(store);
+    this.state[tabId][store.displayName] = store;
+    this.hasChanged();
   }
 });
 

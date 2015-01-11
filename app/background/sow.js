@@ -2,12 +2,12 @@ var MartyStore = require('./stores/martyStore');
 var StoreStore = require('./stores/storeStore');
 var ActionStore = require('./stores/actionStore');
 
-function sowForTab(tabId) {
+function sow(tabId) {
   return {
     stores: StoreStore.getStoresForTab(tabId),
     actions: ActionStore.getActionsForTab(tabId),
-    martyFound: MartyStore.hasMartyBeenFound(tabId)
+    martyFound: MartyStore.hasMartyBeenFoundInTab(tabId)
   };
 }
 
-module.exports = sowForTab;
+module.exports = sow;

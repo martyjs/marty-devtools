@@ -3,12 +3,10 @@ var MESSAGE = 'message';
 var _ = require('underscore');
 var EventEmitter = require('events').EventEmitter;
 
-var Hub = {
-  devtools: new DevtoolsPageConnection(),
-  inspectedWindow: new InspectedWindowConnection()
+module.exports = {
+  Devtools: new DevtoolsPageConnection(),
+  InspectedWindow: new InspectedWindowConnection()
 };
-
-module.exports = Hub;
 
 function DevtoolsPageConnection() {
   var events = new EventEmitter();
@@ -48,7 +46,7 @@ function DevtoolsPageConnection() {
   }
 
   function onMessageFromDevtools(port, message) {
-    if (message.type === 'INITIALIZE') {
+    if (message.type === 'LOADED') {
       connections[message.tabId] = port;
     }
 

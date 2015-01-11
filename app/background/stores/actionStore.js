@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var util = require('util');
 var Marty = require('marty');
+var PageConstants = require('../constants/pageConstants');
 var ActionConstants = require('../constants/actionConstants');
 var statusMap = {
   'ACTION_STARTING': 'Pending',
@@ -12,7 +13,7 @@ var ActionStore = Marty.createStore({
   name: 'Actions',
   handlers: {
     upsertAction: ActionConstants.UPSERT_ACTION,
-    clearActionsForTab: ActionConstants.CLEAR_ACTIONS
+    clearActionsForTab: PageConstants.PAGE_UNLOADED
   },
   getInitialState: function () {
     return {};

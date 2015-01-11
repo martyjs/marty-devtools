@@ -5,96 +5,66 @@ var StoresStore = require('../stores/storeStore');
 var StoresSidePanel = require('./storesSidePanel');
 var DataFlowExplorer = require('./dataFlowExplorer');
 
+var DEFAULT_SIDEBAR_WIDTH = 325;
+var DEFAULT_SIDEBAR_HEIGHT = 325;
+var MINIMUM_CONTENT_WIDTH_PERCENT = 0.34;
+var MINIMUM_CONTENT_HEIGHT_PERCENT = 0.34;
 
 function MartyPanel() {
   WebInspector.View.call(this);
 
   this.element.addStyleClass('panel');
-
-  var initialSidebarWidth = 325;
-  var minimumContentWidthPercent = 0.34;
-  var initialSidebarHeight = 325;
-  var minimumContentHeightPercent = 0.34;
-
   this.element.classList.add('vbox', 'fill');
   this.registerRequiredCSS('networkLogView.css');
   this.registerRequiredCSS('filter.css');
-  this.createSidebarView(
-    this.element,
-    WebInspector.SidebarView.SidebarPosition.End,
-    initialSidebarWidth,
-    initialSidebarHeight
-  );
 
-  this.splitView.setSidebarElementConstraints(
-    Preferences.minElementsSidebarWidth,
-    Preferences.minElementsSidebarHeight
-  );
-
-  this.splitView.setMainElementConstraints(
-    minimumContentWidthPercent,
-    minimumContentHeightPercent
-  );
-
-  this.splitView.addEventListener(
-    WebInspector.SidebarView.EventTypes.Resized,
-    this.sidebarResized.bind(this)
-  );
-
-
+  this.splitView = createSplitView(this.element);
   this.sidebarPaneView = new WebInspector.SidebarPaneStack();
-  this.sidebarPanes = {
-    stores: new StoresSidePanel("Stores", "No stores", this.forceUpdate.bind(this))
-  };
-
-  this.sidebarPanes.stores.update({});
-  StoresStore.addChangeListener(function () {
-    this.sidebarPanes.stores.update(StoresStore.getState());
-  })
-
-  this.sidebarPanes.stores.expand();
-
-  for (var pane in this.sidebarPanes) {
-    this.sidebarPaneView.addPane(this.sidebarPanes[pane]);
-  }
+  this.storesPane = createStoresPane(this.sidebarPaneView);
   this.sidebarPaneView.show(this.splitView.sidebarElement);
 
   React.render(<DataFlowExplorer />, this.splitView.mainElement);
+
+  function createStoresPane(parent) {
+    var storesPane = new StoresSidePanel("Stores", "No stores");
+
+    updateStorePane();
+    StoresStore.addChangeListener(updateStorePane);
+    storesPane.expand();
+    parent.addPane(storesPane);
+
+    return storesPane;
+
+    function updateStorePane() {
+      storesPane.update(StoresStore.getStoreStates());
+    }
+  }
+
+  function createSplitView(parent) {
+    var splitView = new WebInspector.SidebarView(
+      WebInspector.SidebarView.SidebarPosition.End,
+      function () { return 'ElementsSidebarWidth' },
+      DEFAULT_SIDEBAR_WIDTH,
+      DEFAULT_SIDEBAR_HEIGHT
+    );
+
+    splitView.show(parent);
+
+    splitView.setSidebarElementConstraints(
+      Preferences.minElementsSidebarWidth,
+      Preferences.minElementsSidebarHeight
+    );
+
+    splitView.setMainElementConstraints(
+      MINIMUM_CONTENT_WIDTH_PERCENT,
+      MINIMUM_CONTENT_HEIGHT_PERCENT
+    )
+
+    return splitView;
+  }
 }
 
 MartyPanel.prototype = {
-  forceUpdate: function () {
-
-  },
-  sidebarResized: function () {
-  },
-  createSidebarView: function (parentElement, position, defaultWidth, defaultHeight) {
-    if (this.splitView) {
-      return;
-    }
-
-    if (!parentElement) {
-      parentElement = this.element;
-    }
-
-    this.splitView = new WebInspector.SidebarView(
-      position,
-      this._sidebarWidthSettingName(),
-      defaultWidth,
-      defaultHeight
-    );
-
-    this.splitView.show(parentElement);
-    this.splitView.addEventListener(
-      WebInspector.SidebarView.EventTypes.Resized,
-      this.sidebarResized.bind(this)
-    );
-
-    this.sidebarElement = this.splitView.sidebarElement;
-  },
-  _sidebarWidthSettingName: function () {
-    return 'ElementsSidebarWidth';
-  },
   __proto__: WebInspector.View.prototype // jshint ignore:line
 };
 

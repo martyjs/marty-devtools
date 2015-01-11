@@ -1,13 +1,13 @@
-var _ = require('underscore');
 var connection = require('./backgroundConnection');
 
-connection.start().then(function (sow) {
+connection.on('PAGE_LOADED', onPageLoaded);
+connection.open();
+
+function onPageLoaded(sow) {
   if (sow.martyFound) {
     showPanel(sow);
-  } else {
-    connection.on('MARTY_FOUND', _.partial(showPanel, sow));
   }
-});
+}
 
 function showPanel(sow) {
   chrome.devtools.panels.create('Marty', null, 'app/panel/index.html', function (panel) {
