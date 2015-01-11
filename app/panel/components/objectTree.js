@@ -5,31 +5,33 @@ var _ = require('underscore');
 
 var ObjectTree = React.createClass({
   render: function () {
-    var object = this.props.object;
+    return <div/>;
+  },
+  componentDidMount: function () {
+    this.updateObject(this.props.object);
+  },
+  componentWillUpdate: function (props) {
+    this.updateObject(props.object);
+  },
+  updateObject: function (object) {
+    var node = this.getDOMNode();
+    node.removeChildren();
 
-    return (
-      <ul className="object-tree">
-        {_.map(object, function (value, name) {
-          return <ObjectTreeNode name={name} value={value} />;
-        })}
-      </ul>
+    if (!object || Object.keys(object).length === 0) {
+      return;
+    }
+
+    var section = new WebInspector.ObjectPropertiesSection(
+      WebInspector.RemoteObject.fromLocalObject(object),
+      '', '', '', false, null
     );
-  }
-});
 
-var ObjectTreeNode = React.createClass({
-  render: function () {
-    var name = this.props.name;
-    var value = this.props.value;
+    section.headerElement.addStyleClass("hidden");
+    section.expanded = true;
+    section.editable = true;
 
-    return (
-      <li className="object-tree-node">
-        <span className="object-tree-node-name">{name}</span>
-        <span className="object-tree-node-seperator">:</span>
-        <span className="object-tree-node-value source-code">{value}</span>
-      </li>
-    );
+    node.appendChild(section.element);
   }
-});
+ });
 
 module.exports = ObjectTree;
