@@ -22,10 +22,11 @@
   vertical-align: middle;
   cursor: pointer;
   overflow: hidden;
+  background-color: rgb(238, 238, 238);
 }
 
 .list-item.alt {
-  background-color: rgb(238, 238, 238);
+  background-color: white;
 }
 
 .list-item:hover {
@@ -39,4 +40,8 @@
 
 .list-container > .list > .list-item.active div {
   color: white !important;
+}
+
+.section:first-child > .sidebar-pane-title {
+  border-top: none;
 }

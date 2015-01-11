@@ -4,24 +4,29 @@ var React = require('react');
 var List = require('./list');
 var _ = require('underscore');
 var Column = require('./column');
+var Section = require('./section');
 var ObjectTree = require('./objectTree');
 var DataFlowError = require('./dataFlowError');
 var ActionHandlerListItem = require('./actionHandlerListItem');
 
-var ActionHandlersColumn = React.createClass({
+var ActionColumn = React.createClass({
   render: function () {
     var action = this.props.action;
     var error = action ? action.error : null;
 
     return (
-      <Column name='action-handlers'>
-        <ObjectTree object={this.displayObject()} />
-        <DataFlowError error={error} />
-        <List ref='list'>
-          {this.handlers().map(function (handler) {
-            return <ActionHandlerListItem action={action} handler={handler} />;
-          })}
-        </List>
+      <Column name='action'>
+        <Section title='Action'>
+          <ObjectTree object={this.displayObject()} />
+        </Section>
+        <Section title='Action Handlers'>
+          <DataFlowError error={error} />
+          <List ref='list'>
+            {this.handlers().map(function (handler) {
+              return <ActionHandlerListItem action={action} handler={handler} />;
+            })}
+          </List>
+        </Section>
       </Column>
     );
   },
@@ -44,4 +49,4 @@ var ActionHandlersColumn = React.createClass({
   }
 });
 
-module.exports = ActionHandlersColumn;
+module.exports = ActionColumn;
