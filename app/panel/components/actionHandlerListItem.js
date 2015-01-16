@@ -10,7 +10,11 @@ var ActionHandlerListItem = React.createClass({
     var id = handler.store + '#' + handler.name;
 
     return (
-      <ListItem className='action-handler-list-item' active={handler.selected} onClick={this.onClick}>
+      <ListItem
+        popover={handler}
+        onClick={this.onClick}
+        active={handler.selected}
+        className='action-handler-list-item'>
         <div ref='id' className='action-handler-id'>{id}</div>
       </ListItem>
     );

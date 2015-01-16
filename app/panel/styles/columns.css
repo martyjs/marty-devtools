@@ -1,22 +1,21 @@
-.split-columns {
-  height: 100%;
+.columns {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.split-column {
+.column {
+  width: 33%;
   height: 100%;
   float: left;
-  position: relative;
+  display: block;
   border-right: 1px solid #aaa;
 }
 
-.split-column-resizer {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 5px;
-  z-index: 1500;
-  cursor: ew-resize;
+.column-body {
+
 }
 
 .action-failed, .action-failed div {

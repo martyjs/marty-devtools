@@ -45,3 +45,8 @@
 .section:first-child > .sidebar-pane-title {
   border-top: none;
 }
+
+.column-title.sidebar-pane-title::before {
+  background-image: none;
+  width: 0;
+}

@@ -6,7 +6,12 @@ var Column = React.createClass({
   render: function () {
     return (
       <div className={this.props.name + '-column column'}>
-        {this.props.children}
+        <div className='sidebar-pane-title column-title'>
+          {this.props.title}
+        </div>
+        <div className='column-body'>
+          {this.props.children}
+        </div>
       </div>
     );
   }
