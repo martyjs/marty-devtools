@@ -1,7 +1,5 @@
 .list-container {
   flex-grow: 1;
-  overflow: scroll;
-  height: 100%;
 }
 
 .list {
@@ -10,7 +8,6 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
 }
 
@@ -22,7 +19,16 @@
   vertical-align: middle;
   cursor: pointer;
   overflow: hidden;
+  position: relative;
   background-color: rgb(238, 238, 238);
+}
+
+.list-item .fa {
+  font-size: 20px;
+  position: absolute;
+  right: 8px;
+  top: 9px;
+  display: none;
 }
 
 .list-item.alt {
@@ -31,6 +37,12 @@
 
 .list-item:hover {
   text-decoration: underline;
+}
+
+
+.has-children.list-item:hover .fa,
+.has-children.list-item.active .fa {
+  display: block;
 }
 
 .list-container > .list > .list-item.active {

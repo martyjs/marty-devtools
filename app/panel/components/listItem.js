@@ -1,9 +1,20 @@
 /** @jsx React.DOM */
 
+var currentPosition;
 var showAlt = false;
 var React = require('react');
+var _ = require('underscore');
 var classSet = require('react/lib/cx');
 var RemoteObject = WebInspector.RemoteObject;
+var PopoverHelper = require('./popoverhelper');
+
+
+document.addEventListener('mousemove', function (e) {
+  currentPosition = {
+    x: e.clientX,
+    y: e.clientY
+  };
+});
 
 var ListItem = React.createClass({
   render: function () {
@@ -20,20 +31,25 @@ var ListItem = React.createClass({
 
     var onClick = this.props.onClick || function () {};
 
-    return <li onClick={onClick} className={classes} ref='item'>{this.props.children}</li>;
+    return (
+      <li onClick={onClick} className={classes} ref='item'>
+        {this.props.children}
+        <i className='fa fa-angle-right'></i>
+      </li>
+    );
   },
   componentDidMount: function () {
     if (!this.props.popover) {
       return;
     }
 
-    this.popover = new WebInspector.ObjectPopoverHelper(
-      this.getDOMNode(),
-      this.getAnchor,
-      this.queryObject
-    );
+    // this.popover = new PopoverHelper(
+    //   this.getDOMNode(),
+    //   this.getAnchor,
+    //   this.queryObject
+    // );
 
-    this.popover.setTimeout(0);
+    // this.popover.setTimeout(500);
   },
   queryObject: function (element, cb) {
     var obj = RemoteObject.fromLocalObject(this.props.popover);
@@ -41,14 +57,18 @@ var ListItem = React.createClass({
     cb(obj, false);
   },
   getAnchor: function () {
+    if (!currentPosition) {
+      return;
+    }
+
     var element = this.getDOMNode();
     var bounds = element.getBoundingClientRect();
 
     return new AnchorBox(
-      bounds.left,
-      bounds.top,
-      bounds.width,
-      bounds.height
+      currentPosition.x,
+      currentPosition.y,
+      1,
+      1
     );
   }
 });

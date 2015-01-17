@@ -37,7 +37,6 @@ var SplitColumns = React.createClass({
       return (
         <div ref={column.ref} className='split-column' style={{width: width}}>
           {column}
-          <div className='split-column-resizer' onMouseDown={onMouseDown}></div>
         </div>
       );
     }, this);

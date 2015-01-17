@@ -9,7 +9,7 @@ var ViewListItem = require('./viewListItem');
 var ViewsColumn = React.createClass({
   render: function () {
     return (
-      <Column name='action-handler' title='Views'>
+      <Column name='views' title='Views'>
         <List ref='list'>
           {this.views().map(function (view) {
             return <ViewListItem view={view} />;

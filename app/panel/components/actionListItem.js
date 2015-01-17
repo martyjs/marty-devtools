@@ -9,7 +9,8 @@ var ActionListItem = React.createClass({
     var action = this.props.action;
     var classes = [
       'action-list-item',
-      'action-' + action.status.toLowerCase()
+      'action-' + action.status.toLowerCase(),
+      action.handlers.length ? 'has-children' : ''
     ].join(' ');
 
     return (
