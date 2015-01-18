@@ -31,13 +31,12 @@ var SplitColumns = React.createClass({
   },
   columns: function () {
     return React.Children.map(this.props.children, function (column) {
-      var width = this.state.widths[column.ref] + 'px';
+      var width = '33%';
       var onMouseDown = _.partial(this.onMouseDown, _, column.ref);
 
       return (
         <div ref={column.ref} className='split-column' style={{width: width}}>
           {column}
-          <div className='split-column-resizer' onMouseDown={onMouseDown}></div>
         </div>
       );
     }, this);

@@ -1,22 +1,19 @@
-.split-columns {
-  height: 100%;
+.columns {
 }
 
-.split-column {
-  height: 100%;
+.column {
+  width: 33.3333333%;
   float: left;
-  position: relative;
+  display: block;
   border-right: 1px solid #aaa;
 }
 
-.split-column-resizer {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 5px;
-  z-index: 1500;
-  cursor: ew-resize;
+.column:last-child {
+  border-right: none;
+}
+
+.column-body {
+  overflow: auto;
 }
 
 .action-failed, .action-failed div {

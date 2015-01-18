@@ -9,11 +9,16 @@ var ActionListItem = React.createClass({
     var action = this.props.action;
     var classes = [
       'action-list-item',
-      'action-' + action.status.toLowerCase()
+      'action-' + action.status.toLowerCase(),
+      action.handlers.length ? 'has-children' : ''
     ].join(' ');
 
     return (
-      <ListItem className={classes} active={action.selected} onClick={this.onClick}>
+      <ListItem
+        popover={action}
+        className={classes}
+        onClick={this.onClick}
+        active={action.selected}>
         <div ref='type' className='action-type'>{action.type}</div>
         <div ref='status' className='action-status'>{action.status}</div>
       </ListItem>

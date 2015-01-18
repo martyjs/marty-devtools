@@ -8,7 +8,11 @@ var ViewListItem = React.createClass({
     var view = this.props.view;
 
     return (
-      <ListItem className='view-list-item' active={view.selected} onClick={this.onClick}>
+      <ListItem
+        popover={view}
+        onClick={this.onClick}
+        active={view.selected}
+        className='view-list-item'>
         <div ref='nane' className='view-list-item-name'>{view.name}</div>
       </ListItem>
     );

@@ -4,7 +4,6 @@ var React = require('react');
 var List = require('./list');
 var _ = require('underscore');
 var Column = require('./column');
-var Section = require('./section');
 var ObjectTree = require('./objectTree');
 var DataFlowError = require('./dataFlowError');
 var ActionHandlerListItem = require('./actionHandlerListItem');
@@ -15,18 +14,12 @@ var ActionColumn = React.createClass({
     var error = action ? action.error : null;
 
     return (
-      <Column name='action'>
-        <Section title='Action'>
-          <ObjectTree object={this.displayObject()} />
-        </Section>
-        <Section title='Action Handlers'>
-          <DataFlowError error={error} />
-          <List ref='list'>
-            {this.handlers().map(function (handler) {
-              return <ActionHandlerListItem action={action} handler={handler} />;
-            })}
-          </List>
-        </Section>
+      <Column name='action' title='Action Handlers'>
+        <List ref='list'>
+          {this.handlers().map(function (handler) {
+            return <ActionHandlerListItem action={action} handler={handler} />;
+          })}
+        </List>
       </Column>
     );
   },

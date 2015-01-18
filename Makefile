@@ -27,7 +27,7 @@ release:
 	@sh ./build/release.sh
 
 zip:
-	@zip -r dist/marty-devtools.zip app dist/app.js blink manifest.json LICENSE
+	@zip -r dist/marty-devtools.zip app dist/*.js blink manifest.json LICENSE
 
 build:
 	@mkdir -p dist
