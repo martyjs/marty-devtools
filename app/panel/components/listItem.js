@@ -6,8 +6,9 @@ var React = require('react');
 var _ = require('underscore');
 var classSet = require('react/lib/cx');
 var RemoteObject = WebInspector.RemoteObject;
-var PopoverHelper = require('./popoverhelper');
+var PopoverHelper = require('./popoverHelper');
 
+var POPOVER_DELAY = 500;
 
 document.addEventListener('mousemove', function (e) {
   currentPosition = {
@@ -32,24 +33,54 @@ var ListItem = React.createClass({
     var onClick = this.props.onClick || function () {};
 
     return (
-      <li onClick={onClick} className={classes} ref='item'>
+      <li
+        ref='item'
+        onClick={onClick}
+        className={classes}
+        onMouseOut={this.onMouseOut}
+        onMouseOver={this.onMouseOver}>
         {this.props.children}
         <i className='fa fa-angle-right'></i>
       </li>
     );
   },
-  componentDidMount: function () {
+  onMouseOver: function (e) {
     if (!this.props.popover) {
       return;
     }
+    this.mouseOver = true;
+    this.clearTimeout();
+    this.popoverTimeout = setTimeout(_.partial(this.showPopover, e), POPOVER_DELAY);
+  },
+  onMouseOut: function () {
+    this.clearTimeout();
+    this.mouseOver = false;
 
-    // this.popover = new PopoverHelper(
-    //   this.getDOMNode(),
-    //   this.getAnchor,
-    //   this.queryObject
-    // );
+    if (this.popover) {
+      this.popover.dispose();
+      delete this.popover;
+    }
+  },
+  showPopover: function (e) {
+    if (!this.props.popover || !this.mouseOver) {
+      return;
+    }
 
-    // this.popover.setTimeout(500);
+    this.clearTimeout();
+    this.popover = new PopoverHelper(
+      this.getDOMNode(),
+      this.getAnchor,
+      this.queryObject
+    );
+
+    this.popover._handleMouseAction(e);
+  },
+  clearTimeout: function () {
+    if (this.popoverTimeout) {
+      clearTimeout(this.popoverTimeout);
+    }
+
+    this.popoverTimeout = null;
   },
   queryObject: function (element, cb) {
     var obj = RemoteObject.fromLocalObject(this.props.popover);
@@ -57,18 +88,14 @@ var ListItem = React.createClass({
     cb(obj, false);
   },
   getAnchor: function () {
-    if (!currentPosition) {
-      return;
-    }
-
     var element = this.getDOMNode();
     var bounds = element.getBoundingClientRect();
 
     return new AnchorBox(
       currentPosition.x,
-      currentPosition.y,
-      1,
-      1
+      bounds.top,
+      bounds.width,
+      bounds.height
     );
   }
 });
