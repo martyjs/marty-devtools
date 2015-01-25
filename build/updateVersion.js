@@ -8,13 +8,6 @@ var version = semver.inc(require('../package.json').version, inc);
 console.log(version);
 
 ['../manifest.json', '../package.json'].forEach(updateConfig);
-['../app/index.js', '../app/chrome/globalHook.js'].forEach(updateJs);
-
-function updateJs(path) {
-  var js = read(path);
-  js = js.replace(/version = '.*'/, util.format("version = '%s'", version));
-  write(path, js);
-}
 
 function updateConfig(path) {
   var config = JSON.parse(read(path));
