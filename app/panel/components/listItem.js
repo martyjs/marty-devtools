@@ -72,7 +72,7 @@ var ListItem = React.createClass({
       this.getAnchor,
       this.queryObject
     );
-
+    this.popover.setTimeout(0);
     this.popover._handleMouseAction(e);
   },
   clearTimeout: function () {
