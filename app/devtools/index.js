@@ -17,10 +17,13 @@ function showPanel(sow) {
   });
 
   function onPanelShown(panel) {
-    panel.focus();
-    panel.initialize({
-      sow: sow,
-      connection: connection
-    });
+    if (!panel.initialized) {
+      panel.focus();
+      panel.initialize({
+        sow: sow,
+        connection: connection
+      });
+      panel.initialized = true;
+    }
   }
 }
