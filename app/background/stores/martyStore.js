@@ -7,6 +7,9 @@ var MartyStore = Marty.createStore({
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED
   },
+  getInitialState: function () {
+    return {};
+  },
   hasMartyBeenFoundInTab: function (tabId) {
     return !!this.state[tabId];
   },

@@ -22,7 +22,6 @@ var StoreStore = Marty.createStore({
     this.hasChanged();
   },
   pageLoaded: function (sow) {
-    console.log("STORE PAGE LOADED", sow);
     this.state = sow.stores;
 
     this.hasChanged();

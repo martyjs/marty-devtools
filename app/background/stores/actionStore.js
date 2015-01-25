@@ -10,7 +10,7 @@ var statusMap = {
 };
 
 var ActionStore = Marty.createStore({
-  name: 'Actions',
+  displayName: 'Actions',
   handlers: {
     upsertAction: ActionConstants.UPSERT_ACTION,
     clearActionsForTab: PageConstants.PAGE_UNLOADED

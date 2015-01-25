@@ -10,6 +10,9 @@ var StoreStore = Marty.createStore({
     upsertStore: StoreConstants.UPSERT_STORE,
     clearStoreForTab: PageConstants.PAGE_UNLOADED,
   },
+  getInitialState: function () {
+    return {};
+  },
   getStoresForTab: function (tabId) {
     return this.state[tabId] || {};
   },
