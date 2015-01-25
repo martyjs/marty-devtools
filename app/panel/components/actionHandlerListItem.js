@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var _ = require('underscore');
 var ListItem = require('./listItem');
 var classSet = require('react/lib/cx');
 var ActionActionCreators = require('../actions/actionActionCreators');
@@ -16,10 +17,10 @@ var ActionHandlerListItem = React.createClass({
 
     return (
       <ListItem
-        popover={handler}
         className={classes}
         onClick={this.onClick}
-        active={handler.selected}>
+        active={handler.selected}
+        popover={popoverHandler(handler)}>
         <div ref='id' className='action-handler-id'>{id}</div>
       </ListItem>
     );
@@ -28,5 +29,18 @@ var ActionHandlerListItem = React.createClass({
     ActionActionCreators.toggleActionHandler(this.props.action.id, this.props.handler.id);
   }
 });
+
+function popoverHandler(handler) {
+  var popover = _.pick(handler, 'id', 'store', 'state');
+
+  popover['action handler'] = handler.name;
+
+  if (handler.error) {
+    popover.error = handler.error;
+  }
+
+  return popover;
+}
+
 
 module.exports = ActionHandlerListItem;

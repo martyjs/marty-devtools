@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var _ = require('underscore');
 var ListItem = require('./listItem');
 var ActionActionCreators = require('../actions/actionActionCreators');
 
@@ -15,12 +16,12 @@ var ActionListItem = React.createClass({
 
     return (
       <ListItem
-        popover={action}
         className={classes}
         onClick={this.onClick}
-        active={action.selected}>
+        active={action.selected}
+        popover={popoverAction(action)}>
         <div ref='type' className='action-type'>{action.type}</div>
-        <div ref='status' className='action-status'>{action.status}</div>
+        <span ref='status' className='action-status'>{action.status}</span>
       </ListItem>
     );
   },
@@ -28,5 +29,15 @@ var ActionListItem = React.createClass({
     ActionActionCreators.toggleAction(this.props.action.id);
   }
 });
+
+function popoverAction(action) {
+  var popover = _.pick(action, 'id', 'status', 'type');
+
+  if (action.error) {
+    popover.error = action.error;
+  }
+
+  return popover;
+}
 
 module.exports = ActionListItem;
