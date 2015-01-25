@@ -8,7 +8,7 @@ var classSet = require('react/lib/cx');
 var RemoteObject = WebInspector.RemoteObject;
 var PopoverHelper = require('./popoverHelper');
 
-var POPOVER_DELAY = 500;
+var POPOVER_DELAY = 1000;
 
 document.addEventListener('mousemove', function (e) {
   currentPosition = {
@@ -30,42 +30,36 @@ var ListItem = React.createClass({
       classes += (' ' + this.props.className);
     }
 
-    var onClick = this.props.onClick || function () {};
-
     return (
       <li
         ref='item'
-        onClick={onClick}
         className={classes}
-        onMouseOut={this.onMouseOut}
-        onMouseOver={this.onMouseOver}>
+        onClick={this.onClick}
+        onMouseLeave={this.onMouseLeave}
+        onMouseEnter={this.onMouseEnter}>
         {this.props.children}
         <i className='fa fa-angle-right'></i>
       </li>
     );
   },
-  onMouseOver: function (e) {
+  onClick: function () {
+    this.clearTimeout();
+
+    if (this.props.onClick) {
+      this.props.onClick.apply(null, arguments);
+    }
+  },
+  onMouseEnter: function (e) {
     if (!this.props.popover) {
       return;
     }
-    this.mouseOver = true;
     this.clearTimeout();
     this.popoverTimeout = setTimeout(_.partial(this.showPopover, e), POPOVER_DELAY);
   },
-  onMouseOut: function () {
+  onMouseLeave: function () {
     this.clearTimeout();
-    this.mouseOver = false;
-
-    if (this.popover) {
-      this.popover.dispose();
-      delete this.popover;
-    }
   },
   showPopover: function (e) {
-    if (!this.props.popover || !this.mouseOver) {
-      return;
-    }
-
     this.clearTimeout();
     this.popover = new PopoverHelper(
       this.getDOMNode(),
@@ -74,13 +68,14 @@ var ListItem = React.createClass({
     );
     this.popover.setTimeout(0);
     this.popover._handleMouseAction(e);
+    this.popover.setTimeout(POPOVER_DELAY);
   },
   clearTimeout: function () {
     if (this.popoverTimeout) {
       clearTimeout(this.popoverTimeout);
     }
 
-    this.popoverTimeout = null;
+    delete this.popoverTimeout;
   },
   queryObject: function (element, cb) {
     var obj = RemoteObject.fromLocalObject(this.props.popover);
