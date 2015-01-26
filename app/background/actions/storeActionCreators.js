@@ -10,7 +10,7 @@ var StoreActionCreators = Marty.createActionCreators({
       type: 'UPSERT_STORE',
       payload: store
     });
-  })
+  }, { silent: true })
 });
 
 module.exports = StoreActionCreators;

@@ -46,6 +46,10 @@ var ActionStore = Marty.createStore({
     });
   },
   upsertAction: function (action) {
+    if (!action) {
+      throw new Error('Action must be defined');
+    }
+
     this.state[action.id] = action;
     this.hasChanged();
   },

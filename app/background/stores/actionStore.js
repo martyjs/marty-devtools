@@ -36,27 +36,37 @@ var ActionStore = Marty.createStore({
     this.hasChanged();
   },
   upsertAction: function (tabId, action) {
-    var subject = action.arguments[0];
-    var currentState = this.state[subject.id];
+    var id, newState;
 
-    if (_.keys(statusMap).indexOf(action.type) === -1) {
-      return;
+    if (action.internal) {
+      var subject = action.arguments[0];
+
+      if (_.keys(statusMap).indexOf(action.type) === -1) {
+        return;
+      }
+
+      if (subject.timestamp) {
+        subject.timestamp = new Date(subject.timestamp);
+      }
+
+      if (action.type !== 'ACTION_STARTING' && !this.state[subject.id]) {
+        throw new Error(util.format('Unknown action %s (%s)', subject.id, subject.type));
+      }
+
+      id = subject.id;
+      newState = _.extend(subject, {
+        tabId: tabId,
+        status: statusMap[action.type]
+      });
+    } else {
+      id = action.id;
+      newState = {
+        arguments: action.arguments
+      };
     }
 
-    if (subject.timestamp) {
-      subject.timestamp = new Date(subject.timestamp);
-    }
-
-    if (action.type !== 'ACTION_STARTING' && !currentState) {
-      throw new Error(util.format('Unknown action %s (%s)', subject.id, subject.type));
-    }
-
-    this.state[subject.id] = _.extend(currentState || {}, subject, {
-      tabId: tabId,
-      status: statusMap[action.type]
-    });
-
-    this.hasChanged(this.state[subject.id]);
+    this.state[id] = _.extend({}, this.state[id], newState);
+    this.hasChanged();
   }
 });
 

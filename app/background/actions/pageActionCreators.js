@@ -11,13 +11,13 @@ var PageActionCreators = Marty.createActionCreators({
       type: 'PAGE_LOADED',
       payload: sowForTab(tabId)
     });
-  }),
+  }, { silent: true }),
   pageUnloaded: PageConstants.PAGE_UNLOADED(function (tabId) {
     this.dispatch(tabId);
     Devtools.send(tabId, {
       type: 'PAGE_UNLOADED'
     });
-  })
+  }, { silent: true })
 });
 
 module.exports = PageActionCreators;

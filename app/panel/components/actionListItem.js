@@ -31,13 +31,23 @@ var ActionListItem = React.createClass({
 });
 
 function popoverAction(action) {
-  var popover = _.pick(action, 'id', 'status', 'type');
+  var popover = _.pick(action, 'id', 'status', 'type', 'arguments');
 
   if (action.error) {
     popover.error = action.error;
   }
 
+  if (action.arguments) {
+    popover.arguments = arrayToArguments(action.arguments);
+  }
+
   return popover;
+}
+
+function arrayToArguments(arr) {
+  return function () {
+    return arguments;
+  }.apply(null, arr);
 }
 
 module.exports = ActionListItem;

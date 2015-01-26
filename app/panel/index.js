@@ -1,5 +1,3 @@
-// var version = '0.7.2';
-
 function initialize(options) {
   var connection = options.connection;
   var StoreStore = require('./stores/storeStore');

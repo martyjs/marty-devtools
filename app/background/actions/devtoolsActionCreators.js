@@ -17,7 +17,7 @@ var DevtoolsActionCreators = Marty.createActionCreators({
         payload: sow(tabId)
       });
     }
-  })
+  }, { silent: true })
 });
 
 module.exports = DevtoolsActionCreators;

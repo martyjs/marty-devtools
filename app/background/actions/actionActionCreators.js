@@ -8,11 +8,16 @@ var ActionActionCreators = Marty.createActionCreators({
   upsertAction: ActionConstants.UPSERT_ACTION(function (tabId, action) {
     this.dispatch(tabId, action);
 
-    Devtools.send(tabId, {
-      type: 'UPSERT_ACTION',
-      payload: ActionsStore.getActionById(action.arguments[0].id)
-    });
-  })
+    var actionId = action.arguments[0].id;
+    var subject = ActionsStore.getActionById(actionId);
+
+    if (subject) {
+      Devtools.send(tabId, {
+        type: 'UPSERT_ACTION',
+        payload: subject
+      });
+    }
+  }, { silent: true })
 });
 
 module.exports = ActionActionCreators;
