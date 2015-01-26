@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', 'concurrent:serve');
   grunt.registerTask('build-watch', 'concurrent:watch');
-  grunt.registerTask('build', ['releasePanel', 'releaseDevtools', 'releaseBackground']);
+  grunt.registerTask('build', ['browserify:releasePanel', 'browserify:releaseDevtools', 'browserify:releaseBackground']);
 
   grunt.initConfig({
     concurrent: {
