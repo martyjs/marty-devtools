@@ -21,6 +21,8 @@
   }
 
   function listenToMarty(Marty) {
+    Marty.Diagostics.devtoolsEnabled = true;
+
     postMessage('PAGE_LOADED', {
       martyFound: true,
       stores: Marty.serializeState().toJSON()
