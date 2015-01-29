@@ -21,7 +21,9 @@
   }
 
   function listenToMarty(Marty) {
-    Marty.Diagostics.devtoolsEnabled = true;
+    if (Marty.Diagnostics) {
+      Marty.Diagnostics.devtoolsEnabled = true;
+    }
 
     postMessage('PAGE_LOADED', {
       martyFound: true,
