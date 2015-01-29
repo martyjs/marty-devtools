@@ -1,6 +1,6 @@
 {
   "name": "Marty Developer Tools",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Developer tools for Marty",
   "devtools_page": "app/devtools/index.html",
   "manifest_version": 2,
