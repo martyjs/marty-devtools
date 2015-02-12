@@ -50,7 +50,11 @@
   }
 
   function postMessage(type, payload) {
-    window.postMessage(message(type, payload), '*');
+    try {
+      window.postMessage(message(type, payload), '*');
+    } catch (e) {
+      console.error('failed to post message', payload, e);
+    }
   }
 
   function message(type, payload) {
