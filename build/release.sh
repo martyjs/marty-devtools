@@ -8,7 +8,7 @@ echo "updating version"
 version="$(node build/updateVersion.js)"
 
 echo "building v$version"
-make build
+NODE_ENV=production make build
 
 echo "commiting source"
 git add -A
