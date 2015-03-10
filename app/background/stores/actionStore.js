@@ -3,11 +3,6 @@ var util = require('util');
 var Marty = require('marty');
 var PageConstants = require('../constants/pageConstants');
 var ActionConstants = require('../constants/actionConstants');
-var statusMap = {
-  'ACTION_STARTING': 'Pending',
-  'ACTION_FAILED': 'Failed',
-  'ACTION_DONE': 'Done'
-};
 
 var ActionStore = Marty.createStore({
   displayName: 'Actions',
@@ -36,36 +31,13 @@ var ActionStore = Marty.createStore({
     this.hasChanged();
   },
   upsertAction: function (tabId, action) {
-    var id, newState;
+    action.tabId = tabId;
 
-    if (action.internal) {
-      var subject = action.arguments[0];
-
-      if (_.keys(statusMap).indexOf(action.type) === -1) {
-        return;
-      }
-
-      if (subject.timestamp) {
-        subject.timestamp = new Date(subject.timestamp);
-      }
-
-      if (action.type !== 'ACTION_STARTING' && !this.state[subject.id]) {
-        throw new Error(util.format('Unknown action %s (%s)', subject.id, subject.type));
-      }
-
-      id = subject.id;
-      newState = _.extend(subject, {
-        tabId: tabId,
-        status: statusMap[action.type]
-      });
-    } else {
-      id = action.id;
-      newState = {
-        arguments: action.arguments
-      };
+    if (action.timestamp) {
+      action.timestamp = new Date(action.timestamp);
     }
 
-    this.state[id] = _.extend({}, this.state[id], newState);
+    this.state[action.id] = action;
     this.hasChanged();
   }
 });

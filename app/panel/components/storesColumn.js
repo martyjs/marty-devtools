@@ -6,7 +6,7 @@ var _ = require('underscore');
 var Column = require('./column');
 var ObjectTree = require('./objectTree');
 var DataFlowError = require('./dataFlowError');
-var ActionHandlerListItem = require('./actionHandlerListItem');
+var StoreListItem = require('./storeListItem');
 
 var ActionColumn = React.createClass({
   render: function () {
@@ -14,10 +14,10 @@ var ActionColumn = React.createClass({
     var error = action ? action.error : null;
 
     return (
-      <Column name='action' title='Action Handlers'>
+      <Column name='stores' title='Stores'>
         <List ref='list'>
           {this.handlers().map(function (handler) {
-            return <ActionHandlerListItem action={action} handler={handler} />;
+            return <StoreListItem action={action} handler={handler} />;
           })}
         </List>
       </Column>

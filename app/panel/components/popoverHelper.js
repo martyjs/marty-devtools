@@ -11,7 +11,7 @@ PopoverHelper.prototype = {
     this._popover.hide();
   },
   _mouseMove: function() {
-    if (!this._popover.disposed) {
+    if (this._popover && !this._popover.disposed) {
       WebInspector.ObjectPopoverHelper.prototype._mouseMove.apply(this, arguments);
     }
   },

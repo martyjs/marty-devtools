@@ -4,7 +4,7 @@ var ColumnConstants = require('../constants/columnConstants');
 var ColumnsStateSource = require('../stateSources/columnsStateSource');
 
 var ColumnsStore = Marty.createStore({
-  displayName: 'Columns',
+  id: 'Columns',
   handlers: {
     updateColumnWidth: ColumnConstants.UPDATE_COLUMN_WIDTH
   },

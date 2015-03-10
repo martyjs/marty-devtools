@@ -9,7 +9,8 @@ var ActionActionCreators = require('../actions/actionActionCreators');
 var ActionHandlerListItem = React.createClass({
   render: function () {
     var handler = this.props.handler;
-    var id = handler.store + '#' + handler.name;
+    var storeDisplayName = handler.store.displayName || handler.store.id;
+    var id = storeDisplayName + '#' + handler.displayName;
     var classes = classSet({
       'action-handler-list-item': true,
       'has-children': handler.views.length

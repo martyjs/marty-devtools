@@ -10,7 +10,6 @@ var ActionListItem = React.createClass({
     var action = this.props.action;
     var classes = [
       'action-list-item',
-      'action-' + action.status.toLowerCase(),
       action.handlers.length ? 'has-children' : ''
     ].join(' ');
 
@@ -21,7 +20,6 @@ var ActionListItem = React.createClass({
         active={action.selected}
         popover={popoverAction(action)}>
         <div ref='type' className='action-type'>{action.type}</div>
-        <span ref='status' className='action-status'>{action.status}</span>
       </ListItem>
     );
   },
@@ -31,7 +29,7 @@ var ActionListItem = React.createClass({
 });
 
 function popoverAction(action) {
-  var popover = _.pick(action, 'id', 'status', 'type', 'arguments');
+  var popover = _.pick(action, 'id', 'type', 'arguments');
 
   if (action.error) {
     popover.error = action.error;

@@ -4,7 +4,7 @@ var PageConstants = require('../constants/pageConstants');
 var StoreConstants = require('../constants/storeConstants');
 
 var StoreStore = Marty.createStore({
-  displayName: 'Stores',
+  id: 'Stores',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
     upsertStore: StoreConstants.UPSERT_STORE,
@@ -14,7 +14,7 @@ var StoreStore = Marty.createStore({
     return {};
   },
   upsertStore: function (store) {
-    this.state[store.displayName] = store;
+    this.state[store.id] = store;
     this.hasChanged();
   },
   clearStores: function () {
@@ -29,8 +29,8 @@ var StoreStore = Marty.createStore({
   getStoreStates: function () {
     var states = {};
 
-    _.each(this.state, function (store, displayName) {
-      states[displayName] = store.state;
+    _.each(this.state, function (store, id) {
+      states[id] = store.state;
     });
 
     return states;

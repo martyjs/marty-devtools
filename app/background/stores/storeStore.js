@@ -31,7 +31,7 @@ var StoreStore = Marty.createStore({
       this.state[tabId] = {};
     }
 
-    this.state[tabId][store.displayName] = store;
+    this.state[tabId][store.id] = store;
     this.hasChanged();
   }
 });

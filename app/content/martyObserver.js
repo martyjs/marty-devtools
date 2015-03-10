@@ -27,24 +27,25 @@
 
     postMessage('PAGE_LOADED', {
       martyFound: true,
-      stores: Marty.serializeState().toJSON()
+      stores: Marty.dehydrate().toJSON()
     });
 
+    var Dispatcher = Marty.Dispatcher.getDefault();
+
     Marty.addStoreChangeListener(onStoreChanged);
-    Marty.Dispatcher.register(onActionDispatched);
+    Dispatcher.onActionDispatched(onActionDispatched);
 
     function onActionDispatched(action) {
       postMessage('ACTION_DISPATCHED', action.toJSON());
     }
 
     function onStoreChanged(state, store) {
-      if (store.serialize) {
-        state = store.serialize();
-      }
+      var state = (store.dehydrate || store.getState).call(store)
 
       postMessage('STORE_CHANGED', {
-        displayName: store.displayName,
-        state: state
+        id: store.id,
+        state: state,
+        displayName: store.displayName
       });
     }
   }
