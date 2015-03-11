@@ -17,6 +17,8 @@ function MartyPanel() {
   this.element.classList.add('vbox', 'fill');
   this.registerRequiredCSS('networkLogView.css');
   this.registerRequiredCSS('filter.css');
+  this.registerRequiredCSS('resourceView.css');
+
 
   this.splitView = createSplitView(this.element);
   this.sidebarPaneView = new WebInspector.SidebarPaneStack();

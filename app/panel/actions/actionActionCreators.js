@@ -5,8 +5,7 @@ var ActionActionCreators = Marty.createActionCreators({
   displayName: 'Actions',
   toggleAction: ActionConstants.TOGGLE_ACTION(),
   clearActions: ActionConstants.CLEAR_ACTIONS(),
-  upsertAction: ActionConstants.UPSERT_ACTION(),
-  toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER()
+  upsertAction: ActionConstants.UPSERT_ACTION()
 });
 
 module.exports = ActionActionCreators;

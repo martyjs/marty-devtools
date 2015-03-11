@@ -8,17 +8,11 @@ var ActionActionCreators = require('../actions/actionActionCreators');
 var ActionListItem = React.createClass({
   render: function () {
     var action = this.props.action;
-    var classes = [
-      'action-list-item',
-      action.handlers.length ? 'has-children' : ''
-    ].join(' ');
 
     return (
       <ListItem
-        className={classes}
         onClick={this.onClick}
-        active={action.selected}
-        popover={popoverAction(action)}>
+        active={action.selected}>
         <div ref='type' className='action-type'>{action.type}</div>
       </ListItem>
     );
@@ -27,20 +21,6 @@ var ActionListItem = React.createClass({
     ActionActionCreators.toggleAction(this.props.action.id);
   }
 });
-
-function popoverAction(action) {
-  var popover = _.pick(action, 'id', 'type', 'arguments');
-
-  if (action.error) {
-    popover.error = action.error;
-  }
-
-  if (action.arguments) {
-    popover.arguments = arrayToArguments(action.arguments);
-  }
-
-  return popover;
-}
 
 function arrayToArguments(arr) {
   return function () {

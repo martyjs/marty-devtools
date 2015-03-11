@@ -10,20 +10,28 @@ function initialize(options) {
   shimConsole(window.console);
 
   connection.on('UPSERT_ACTION', function (action) {
+    console.log('UPSERT_ACTION', action);
     ActionActionCreators.upsertAction(action);
   });
 
   connection.on('UPSERT_STORE', function (store) {
+    console.log('UPSERT_STORE', store);
     StoreActionCreators.upsertStore(store);
   });
 
   connection.on('PAGE_LOADED', function (sow) {
+    console.log('PAGE_LOADED', sow);
     PageActionCreators.pageLoaded(sow);
   });
 
+  console.log('SOW', options.sow);
   PageActionCreators.pageLoaded(options.sow);
 
-  renderMartyPanel();
+  try {
+    renderMartyPanel();
+  } catch (e) {
+    console.error('Failed to render panel', e);
+  }
 }
 
 function renderMartyPanel() {
