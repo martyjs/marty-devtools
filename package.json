@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/jhollingworth/marty-devtools",
   "dependencies": {
+    "babelify": "^5.0.4",
+    "classnames": "^1.1.4",
     "lodash": "^3.0.0",
     "marty": "0.9.x",
     "react": "0.13.x"
@@ -34,12 +36,8 @@
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.2.1",
     "grunt-concurrent": "^1.0.0",
-    "jsxcs": "0.0.3",
-    "jsxhint": "^0.4.14",
     "mocha": "^1.21.4",
-    "reactify": "^0.14.0",
     "semver": "^4.2.0",
-    "underscore": "^1.7.0",
     "watchify": "^2.1.1"
   },
   "browserify-shim": {
@@ -48,7 +46,7 @@
   },
   "browserify": {
     "transform": [
-      "reactify",
+      "babelify",
       "envify"
     ]
   }

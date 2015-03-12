@@ -30,7 +30,7 @@ function initialize(options) {
   try {
     renderMartyPanel();
   } catch (e) {
-    console.error('Failed to render panel', e);
+    console.error('Failed to render panel', e, e.stack);
   }
 }
 

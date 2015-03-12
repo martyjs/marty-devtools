@@ -1,14 +1,12 @@
-/** @jsx React.DOM */
-
 var showAlt = false;
 var React = require('react');
-var _ = require('underscore');
-var classSet = require('react/lib/cx');
+var _ = require('lodash');
+var classNames = require('classnames');
 
 var ListItem = React.createClass({
   render: function () {
     showAlt = !showAlt;
-    var classes = classSet({
+    var classes = classNames({
       'list-item': true,
       'alt': showAlt,
       'active': this.props.active

@@ -1,5 +1,5 @@
 var Marty = require('marty');
-var _ = require('underscore');
+var _ = require('lodash');
 var PageConstants = require('../constants/pageConstants');
 var StoreConstants = require('../constants/storeConstants');
 

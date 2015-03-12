@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var StoresStore = require('../stores/storeStore');
 var StoresSidePanel = require('./storesSidePanel');

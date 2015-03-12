@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
-
 var React = require('react');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var ObjectTree = React.createClass({
   render: function () {

@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
-
 var React = require('react');
-var _ = require('underscore');
+var _ = require('lodash');
 var ListItem = require('./listItem');
 var ActionActionCreators = require('../actions/actionActionCreators');
 
