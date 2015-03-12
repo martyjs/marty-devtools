@@ -15,6 +15,7 @@ var ActionStore = Marty.createStore({
     pageLoaded: PageConstants.PAGE_LOADED,
     upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
+    unselectAllActions: ActionConstants.UNSELECT_ALL_ACTIONS,
     clearActions: [ActionConstants.CLEAR_ACTIONS, PageConstants.PAGE_UNLOADED]
   },
   getInitialState: function () {
@@ -50,6 +51,12 @@ var ActionStore = Marty.createStore({
     }
 
     this.state[action.id] = action;
+    this.hasChanged();
+  },
+  unselectAllActions: function () {
+    _.each(this.state, function (action) {
+      action.selected = false;
+    });
     this.hasChanged();
   },
   toggleAction: function (actionId) {

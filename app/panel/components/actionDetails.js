@@ -36,11 +36,22 @@ var ActionDetails = React.createClass({
       var details = {};
 
       _.each(action.components, function (handler) {
-        if (!details[handler.displayName]) {
-          details[handler.displayName] = 0;
+        var handlerDetails = details[handler.displayName];
+
+        if (!handlerDetails) {
+          handlerDetails = details[handler.displayName] = {
+            'Total re-rendered': 0,
+            'Triggered by': []
+          };
         }
 
-        details[handler.displayName]++;
+        handlerDetails['Total re-rendered']++;
+
+        var triggeredBy = handlerDetails['Triggered by'];
+
+        if (triggeredBy.indexOf(handler.store) === -1) {
+          triggeredBy.push(handler.store);
+        }
       });
 
       return details;

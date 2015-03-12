@@ -17,7 +17,9 @@ var ActionListItem = React.createClass({
       </ListItem>
     );
   },
-  onClick: function () {
+  onClick: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
     ActionActionCreators.toggleAction(this.props.action.id);
   }
 });

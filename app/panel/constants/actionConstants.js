@@ -5,6 +5,7 @@ var ActionConstants = Marty.createConstants([
   'TOGGLE_ACTION',
   'CLEAR_ACTIONS',
   'TOGGLE_VIEW_HANDLER',
+  'UNSELECT_ALL_ACTIONS',
   'TOGGLE_ACTION_HANDLER'
 ]);
 
