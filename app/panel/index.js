@@ -4,27 +4,22 @@ function initialize(options) {
   var ActionStore = require('./stores/actionStore'); // jshint ignore:line
   var shimConsole = require('./chrome/shimConsole'); // jshint ignore:line
   var PageActionCreators = require('./actions/pageActionCreators');
-  var StoreActionCreators = require('./actions/storeActionCreators');
   var ActionActionCreators = require('./actions/actionActionCreators');
 
   shimConsole(window.console);
 
-  connection.on('UPSERT_ACTION', function (action) {
-    console.log('UPSERT_ACTION', action);
-    ActionActionCreators.upsertAction(action);
-  });
+  connection.on('*', function () {
+    console.log(arguments);
+  })
 
-  connection.on('UPSERT_STORE', function (store) {
-    console.log('UPSERT_STORE', store);
-    StoreActionCreators.upsertStore(store);
+  connection.on('ACTION_DISPATCHED', function (dispatch) {
+    ActionActionCreators.actionDispatched(dispatch);
   });
 
   connection.on('PAGE_LOADED', function (sow) {
-    console.log('PAGE_LOADED', sow);
     PageActionCreators.pageLoaded(sow);
   });
 
-  console.log('SOW', options.sow);
   PageActionCreators.pageLoaded(options.sow);
 
   try {

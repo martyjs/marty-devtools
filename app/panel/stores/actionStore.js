@@ -13,8 +13,8 @@ var ActionStore = Marty.createStore({
   id: 'Actions',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
-    upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
+    addDispatchedAction: ActionConstants.ACTION_DISPATCHED,
     unselectAllActions: ActionConstants.UNSELECT_ALL_ACTIONS,
     clearActions: [ActionConstants.CLEAR_ACTIONS, PageConstants.PAGE_UNLOADED]
   },
@@ -45,7 +45,9 @@ var ActionStore = Marty.createStore({
       selected: true
     });
   },
-  upsertAction: function (action) {
+  addDispatchedAction: function (dispatch) {
+    var action = dispatch.action;
+
     if (!action) {
       throw new Error('Action must be defined');
     }

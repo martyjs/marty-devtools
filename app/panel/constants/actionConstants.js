@@ -1,7 +1,7 @@
 var Marty = require('marty');
 
 var ActionConstants = Marty.createConstants([
-  'UPSERT_ACTION',
+  'ACTION_DISPATCHED',
   'TOGGLE_ACTION',
   'CLEAR_ACTIONS',
   'TOGGLE_VIEW_HANDLER',

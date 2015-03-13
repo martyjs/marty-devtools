@@ -7,13 +7,13 @@ var StoreStore = Marty.createStore({
   id: 'Stores',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
-    upsertStore: StoreConstants.UPSERT_STORE,
+    // upsertStore: StoreConstants.UPSERT_ACTION,
     clearStores: PageConstants.PAGE_UNLOADED,
   },
   getInitialState: function () {
     return {};
   },
-  upsertStore: function (store) {
+  upsertStore: function (action) {
     this.state[store.id] = store;
     this.hasChanged();
   },

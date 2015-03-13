@@ -6,11 +6,8 @@ var DevtoolsActionCreators = require('./actions/devtoolsActionCreators');
 
 Connections.InspectedWindow.onMessage(function (tabId, message) {
   switch (message.type) {
-    case 'STORE_CHANGED':
-      StoreActionCreators.upsertStore(tabId, message.payload);
-      break;
     case 'ACTION_DISPATCHED':
-      ActionActionCreators.upsertAction(tabId, message.payload);
+      ActionActionCreators.actionDispatched(tabId, message.payload);
       break;
     case 'PAGE_LOADED':
       PageActionCreators.pageLoaded(tabId, message.payload);

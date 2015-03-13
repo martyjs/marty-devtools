@@ -35,18 +35,26 @@
 
   function tryAndFindMarty(time) {
     if (window.Marty) {
+      if (Marty.version === '0.9.0-rc1' || !/^0.9./.test(Marty.version)) {
+      console.warn('Marty DevTools only works with Marty v0.9');
+      return martyNotFound();
+    }
+
       listenToMarty(window.Marty);
     } else {
       if (time > TIMEOUT) {
-        postMessage('PAGE_LOADED', {
-          martyFound: false
-        });
-        return;
+        return martyNotFound();
       }
 
       setTimeout(function () {
         tryAndFindMarty(time * 2);
       }, time);
+    }
+
+    function martyNotFound() {
+      postMessage('PAGE_LOADED', {
+        martyFound: false
+      });
     }
   }
 
@@ -62,20 +70,18 @@
 
     var Dispatcher = Marty.Dispatcher.getDefault();
 
-    Marty.addStoreChangeListener(onStoreChanged);
+    if (!Dispatcher) {
+      console.error('No default dispatcher');
+      return;
+    }
+
     Dispatcher.onActionDispatched(onActionDispatched);
 
     function onActionDispatched(action) {
-      postMessage('ACTION_DISPATCHED', action.toJSON());
-    }
-
-    function onStoreChanged(state, store) {
-      var state = (store.dehydrate || store.getState).call(store)
-
-      postMessage('STORE_CHANGED', {
-        id: store.id,
-        state: state,
-        displayName: store.displayName
+      postMessage('ACTION_DISPATCHED', {
+        id: action.id,
+        action: action.toJSON(),
+        dehydratedState: Marty.dehydrate()
       });
     }
   }

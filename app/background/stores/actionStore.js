@@ -7,8 +7,8 @@ var ActionConstants = require('../constants/actionConstants');
 var ActionStore = Marty.createStore({
   displayName: 'Actions',
   handlers: {
-    upsertAction: ActionConstants.UPSERT_ACTION,
-    clearActionsForTab: PageConstants.PAGE_UNLOADED
+    clearActionsForTab: PageConstants.PAGE_UNLOADED,
+    addDispatch: ActionConstants.ACTION_DISPATCHED
   },
   getInitialState: function () {
     return {};
@@ -30,14 +30,9 @@ var ActionStore = Marty.createStore({
 
     this.hasChanged();
   },
-  upsertAction: function (tabId, action) {
-    action.tabId = tabId;
-
-    if (action.timestamp) {
-      action.timestamp = new Date(action.timestamp);
-    }
-
-    this.state[action.id] = action;
+  addDispatch: function (tabId, dispatch) {
+    dispatch.tabId = tabId;
+    this.state[dispatch.id] = dispatch;
     this.hasChanged();
   }
 });

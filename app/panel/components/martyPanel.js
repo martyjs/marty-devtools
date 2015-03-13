@@ -23,6 +23,20 @@ function MartyPanel() {
   this.storesPane = createStoresPane(this.sidebarPaneView);
   this.sidebarPaneView.show(this.splitView.sidebarElement);
 
+
+  // this.splitView.mainElement.addEventListener("contextmenu", function (event) {
+  //   function toggleWordWrap() {
+  //     WebInspector.settings.domWordWrap.set(!WebInspector.settings.domWordWrap.get());
+  //   }
+  // Revert to action
+  // Show application at this point
+  //   var contextMenu = new WebInspector.ContextMenu(event);
+  //   // Disabled
+  //   contextMenu.appendCheckboxItem(WebInspector.UIString(WebInspector.useLowerCaseMenuTitles() ? "Fuck yeah" : "Fuck yeah"), toggleWordWrap, WebInspector.settings.domWordWrap.get());
+
+  //   contextMenu.show();
+  // }, true);
+
   React.render(<DataFlowExplorer />, this.splitView.mainElement);
 
   function createStoresPane(parent) {

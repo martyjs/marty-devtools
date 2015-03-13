@@ -5,12 +5,12 @@ var Devtools = require('../stateSources/connections').Devtools;
 
 var ActionActionCreators = Marty.createActionCreators({
   displayName: 'Actions',
-  upsertAction: function (tabId, action) {
-    this.dispatch(ActionConstants.UPSERT_ACTION, tabId, action);
+  actionDispatched: function (tabId, dispatch) {
+    this.dispatch(ActionConstants.ACTION_DISPATCHED, tabId, dispatch);
 
     Devtools.send(tabId, {
-      type: 'UPSERT_ACTION',
-      payload: action
+      type: 'ACTION_DISPATCHED',
+      payload: dispatch
     });
   }
 });

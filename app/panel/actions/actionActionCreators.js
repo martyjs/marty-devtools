@@ -6,7 +6,7 @@ var ActionActionCreators = Marty.createActionCreators({
   displayName: 'Actions',
   toggleAction: autoDispatch(ActionConstants.TOGGLE_ACTION),
   clearActions: autoDispatch(ActionConstants.CLEAR_ACTIONS),
-  upsertAction: autoDispatch(ActionConstants.UPSERT_ACTION),
+  actionDispatched: autoDispatch(ActionConstants.ACTION_DISPATCHED),
   unselectAllActions: autoDispatch(ActionConstants.UNSELECT_ALL_ACTIONS)
 });
 
