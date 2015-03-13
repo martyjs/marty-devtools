@@ -5,19 +5,19 @@ var Devtools = require('../stateSources/connections').Devtools;
 
 var PageActionCreators = Marty.createActionCreators({
   displayName: 'Page',
-  pageLoaded: PageConstants.PAGE_LOADED(function (tabId, sow) {
-    this.dispatch(tabId, sow);
+  pageLoaded: function (tabId, sow) {
+    this.dispatch(PageConstants.PAGE_LOADED, tabId, sow);
     Devtools.send(tabId, {
       type: 'PAGE_LOADED',
       payload: sowForTab(tabId)
     });
-  }, { silent: true }),
-  pageUnloaded: PageConstants.PAGE_UNLOADED(function (tabId) {
-    this.dispatch(tabId);
+  },
+  pageUnloaded: function (tabId) {
+    this.dispatch(PageConstants.PAGE_UNLOADED, tabId);
     Devtools.send(tabId, {
       type: 'PAGE_UNLOADED'
     });
-  }, { silent: true })
+  }
 });
 
 module.exports = PageActionCreators;

@@ -6,8 +6,8 @@ var DevtoolsConstants = require('../constants/devtoolsConstants');
 
 var DevtoolsActionCreators = Marty.createActionCreators({
   displayName: 'Devtools',
-  devtoolsLoaded: DevtoolsConstants.LOADED(function (tabId) {
-    this.dispatch(tabId);
+  devtoolsLoaded: function (tabId) {
+    this.dispatch(DevtoolsConstants.LOADED, tabId);
 
     // If marty has already been on the page, then just
     // send the sow straight away
@@ -17,7 +17,7 @@ var DevtoolsActionCreators = Marty.createActionCreators({
         payload: sow(tabId)
       });
     }
-  }, { silent: true })
+  }
 });
 
 module.exports = DevtoolsActionCreators;

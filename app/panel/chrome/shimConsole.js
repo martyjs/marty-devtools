@@ -5,7 +5,7 @@ function shimConsole(console) {
     return;
   }
 
-  // if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     ['log', 'info', 'warn', 'error'].forEach(function (type) {
       var func = console[type];
 
@@ -18,7 +18,7 @@ function shimConsole(console) {
         func.apply(console, arguments);
       };
     });
-  // }
+  }
 }
 
 module.exports = shimConsole;

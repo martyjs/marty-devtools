@@ -1,9 +1,7 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var StoresStore = require('../stores/storeStore');
-var StoresSidePanel = require('./storesSidePanel');
 var DataFlowExplorer = require('./dataFlowExplorer');
+var ObjectSidebarPane = require('./objectSidebarPane');
 
 var DEFAULT_SIDEBAR_WIDTH = 325;
 var DEFAULT_SIDEBAR_HEIGHT = 325;
@@ -17,26 +15,46 @@ function MartyPanel() {
   this.element.classList.add('vbox', 'fill');
   this.registerRequiredCSS('networkLogView.css');
   this.registerRequiredCSS('filter.css');
+  this.registerRequiredCSS('resourceView.css');
+
 
   this.splitView = createSplitView(this.element);
   this.sidebarPaneView = new WebInspector.SidebarPaneStack();
   this.storesPane = createStoresPane(this.sidebarPaneView);
   this.sidebarPaneView.show(this.splitView.sidebarElement);
 
+  this.sidebarPanes = {};
+  this.sidebarPanes.stores = createStoresPane();
+
+  this.sidebarPaneView.addPane(this.sidebarPanes.stores);
+
+
+
   React.render(<DataFlowExplorer />, this.splitView.mainElement);
 
-  function createStoresPane(parent) {
-    var storesPane = new StoresSidePanel("Stores", "No stores");
+  function createGeneralPanel() {
+    var pane = new ObjectSidebarPane('General', '', edit);
 
-    updateStorePane();
-    StoresStore.addChangeListener(updateStorePane);
-    storesPane.expand();
-    parent.addPane(storesPane);
+    pane.update({
+      State: {}
+    });
 
-    return storesPane;
+    pane.expand();
 
-    function updateStorePane() {
-      storesPane.update(StoresStore.getStoreStates());
+    return pane;
+  }
+
+  function createStoresPane() {
+    var pane = new ObjectSidebarPane('Stores', 'No stores');
+
+    updatePane();
+    StoresStore.addChangeListener(updatePane);
+    pane.expand();
+
+    return pane;
+
+    function updatePane() {
+      pane.update(StoresStore.getStoreStates());
     }
   }
 

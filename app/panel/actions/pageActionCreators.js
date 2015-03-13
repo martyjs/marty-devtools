@@ -1,10 +1,11 @@
 var Marty = require('marty');
+var autoDispatch = require('marty/autoDispatch');
 var PageConstants = require('../constants/pageConstants');
 
 var PageActionCreators = Marty.createActionCreators({
-  displayName: 'Page',
-  pageLoaded: PageConstants.PAGE_LOADED(),
-  pageUnloaded: PageConstants.PAGE_UNLOADED()
+  id: 'PageActionCreators',
+  pageLoaded: autoDispatch(PageConstants.PAGE_LOADED),
+  pageUnloaded: autoDispatch(PageConstants.PAGE_UNLOADED)
 });
 
 module.exports = PageActionCreators;

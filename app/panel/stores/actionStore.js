@@ -3,6 +3,7 @@ var util = require('util');
 var Marty = require('marty');
 var PageConstants = require('../constants/pageConstants');
 var ActionConstants = require('../constants/actionConstants');
+var DispatchConstants = require('../constants/dispatchConstants');
 var statusMap = {
   'ACTION_STARTING': 'Pending',
   'ACTION_FAILED': 'Failed',
@@ -13,39 +14,57 @@ var ActionStore = Marty.createStore({
   id: 'Actions',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
-    upsertAction: ActionConstants.UPSERT_ACTION,
     toggleAction: ActionConstants.TOGGLE_ACTION,
-    toggleActionHandler: ActionConstants.TOGGLE_ACTION_HANDLER,
+    revertToAction: ActionConstants.REVERT_TO_ACTION,
+    receiveDispatch: DispatchConstants.RECEIVE_DISPATCH,
+    unselectAllActions: ActionConstants.UNSELECT_ALL_ACTIONS,
     clearActions: [ActionConstants.CLEAR_ACTIONS, PageConstants.PAGE_UNLOADED]
   },
-  getInitialState: function () {
+  getInitialState() {
     return {};
   },
-  clearActions: function () {
+  clearActions() {
     this.clear();
     this.hasChanged();
   },
-  pageLoaded: function (sow) {
+  pageLoaded(sow) {
     var actions = {};
-    _.each(sow.actions, function (action) {
+    _.each(sow.dispatches, function (dispatch) {
+      var action = dispatch.action;
       actions[action.id] = action;
     });
 
     this.state = actions;
     this.hasChanged();
   },
-  getAll: function () {
+  getAll() {
     return _.sortBy(_.values(this.state), 'timestamp').reverse();
   },
-  getActionById: function (id) {
+  getActionById(id) {
     return this.state[id];
   },
-  getSelectedAction: function () {
+  getLatestAction() {
+    return _.first(this.getAll());
+  },
+  getSelectedAction() {
     return _.find(this.state, {
       selected: true
     });
   },
-  upsertAction: function (action) {
+  revertToAction(actionId) {
+    var subject = this.state[actionId];
+
+    _.each(this.state, (action) => {
+      if (action.timestamp > subject.timestamp) {
+        delete this.state[action.id];
+      }
+    });
+
+    this.hasChanged();
+  },
+  receiveDispatch(dispatch) {
+    var action = dispatch.action;
+
     if (!action) {
       throw new Error('Action must be defined');
     }
@@ -53,22 +72,13 @@ var ActionStore = Marty.createStore({
     this.state[action.id] = action;
     this.hasChanged();
   },
-  getSelectedActionHandler: function () {
-    var selectedAction = this.getSelectedAction();
-
-    if (selectedAction) {
-      return _.find(selectedAction.handlers, {
-        selected: true
-      });
-    }
+  unselectAllActions() {
+    _.each(this.state, function (action) {
+      action.selected = false;
+    });
+    this.hasChanged();
   },
-  toggleAction: function (actionId) {
-    var handler = this.getSelectedActionHandler();
-
-    if (handler) {
-      handler.selected = false;
-    }
-
+  toggleAction(actionId) {
     _.each(this.state, function (action) {
       if (action.id === actionId) {
         action.selected = !action.selected;
@@ -76,23 +86,6 @@ var ActionStore = Marty.createStore({
         action.selected = false;
       }
     });
-    this.hasChanged();
-  },
-  toggleActionHandler: function (actionId, handlerId) {
-    var action = this.state[actionId];
-
-    if (!action) {
-      return;
-    }
-
-    _.each(action.handlers, function (handler) {
-      if (handler.id === handlerId) {
-        handler.selected = !handler.selected;
-      } else {
-        handler.selected = false;
-      }
-    });
-
     this.hasChanged();
   }
 });

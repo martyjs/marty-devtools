@@ -3,27 +3,29 @@ function initialize(options) {
   var StoreStore = require('./stores/storeStore');
   var ActionStore = require('./stores/actionStore'); // jshint ignore:line
   var shimConsole = require('./chrome/shimConsole'); // jshint ignore:line
+  var DispatchStore = require('./stores/dispatchStore'); // jshint ignore:line
+  var ConnectionStore = require('./stores/connectionStore'); // jshint ignore:line
   var PageActionCreators = require('./actions/pageActionCreators');
-  var StoreActionCreators = require('./actions/storeActionCreators');
-  var ActionActionCreators = require('./actions/actionActionCreators');
+  var DispatchActionCreators = require('./actions/dispatchActionCreators');
 
   shimConsole(window.console);
 
-  connection.on('UPSERT_ACTION', function (action) {
-    ActionActionCreators.upsertAction(action);
-  });
-
-  connection.on('UPSERT_STORE', function (store) {
-    StoreActionCreators.upsertStore(store);
+  chrome.devtools.inspectedWindow.eval(`console.log('initialize 123')`);
+  connection.on('RECEIVE_DISPATCH', function (dispatch) {
+    DispatchActionCreators.receiveDispatch(dispatch);
   });
 
   connection.on('PAGE_LOADED', function (sow) {
     PageActionCreators.pageLoaded(sow);
   });
 
-  PageActionCreators.pageLoaded(options.sow);
+  try {
+    PageActionCreators.pageLoaded(options.sow, options.connection);
 
-  renderMartyPanel();
+    renderMartyPanel();
+  } catch (e) {
+    console.error('Failed to render panel', e, e.stack);
+  }
 }
 
 function renderMartyPanel() {

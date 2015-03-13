@@ -1,11 +1,9 @@
-/** @jsx React.DOM */
-
 var React = require('react');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var ObjectTree = React.createClass({
   render: function () {
-    return <div/>;
+    return <div className="outline-disclosure"/>;
   },
   componentDidMount: function () {
     this.updateObject(this.props.object);
@@ -21,16 +19,22 @@ var ObjectTree = React.createClass({
       return;
     }
 
-    var section = new WebInspector.ObjectPropertiesSection(
-      WebInspector.RemoteObject.fromLocalObject(object),
-      '', '', '', false, null
-    );
+    _.each(object, function (props, key) {
+      var section = new WebInspector.ObjectPropertiesSection(
+        WebInspector.RemoteObject.fromLocalObject(props),
+        key,
+        '',
+        'No ' + key.toLowerCase(),
+        false,
+        null
+      );
 
-    section.headerElement.addStyleClass("hidden");
-    section.expanded = true;
-    section.editable = true;
+      // section.headerElement.addStyleClass("hidden");
+      section.expanded = true;
+      section.editable = false;
 
-    node.appendChild(section.element);
+      node.appendChild(section.element);
+    });
   }
  });
 

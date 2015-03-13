@@ -1,6 +1,6 @@
 var connections = {};
 var MESSAGE = 'message';
-var _ = require('underscore');
+var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
 
 module.exports = {

@@ -52,7 +52,6 @@ module.exports = function (grunt) {
       src: [input],
       dest: output,
       options: {
-        transform: ['reactify', 'envify'],
         watch: !!options.watch,
         keepAlive: !!options.watch,
         browserifyOptions: {

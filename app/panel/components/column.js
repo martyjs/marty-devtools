@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 
 var Column = React.createClass({
@@ -13,7 +11,7 @@ var Column = React.createClass({
         <div className='sidebar-pane-title column-title'>
           {this.props.title}
         </div>
-        <div className='column-body' style={style}>
+        <div className='column-body' style={style} onClick={this.props.onClick}>
           {this.props.children}
         </div>
       </div>
@@ -29,6 +27,9 @@ var Column = React.createClass({
     return {
       height: window.innerHeight - 20
     };
+  },
+  getDefaultProps: function () {
+    return { onClick: function () {} };
   },
   updateBodyHeight: function () {
     this.setState(this.getState());

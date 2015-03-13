@@ -1,5 +1,5 @@
 var COLUMNS_KEY = 'columns';
-var _ = require('underscore');
+var _ = require('lodash');
 var JSONStateSource = require('./jsonStateSource');
 
 module.exports = new JSONStateSource({

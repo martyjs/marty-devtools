@@ -13,10 +13,18 @@ function onPageLoaded(sow) {
 
 function showPanel(sow) {
   chrome.devtools.panels.create('Marty', null, 'app/panel/index.html', function (panel) {
+    connection.on('RECEIVE_DISPATCH', addDispatchToSOW);
+
     panel.onShown.addListener(onPanelShown);
   });
 
+  function addDispatchToSOW(dispatch) {
+    sow.dispatches.push(dispatch);
+  }
+
   function onPanelShown(panel) {
+    connection.removeListener('RECEIVE_DISPATCH', addDispatchToSOW);
+
     if (!panel.initialized) {
       panel.focus();
       panel.initialize({

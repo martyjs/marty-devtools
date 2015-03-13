@@ -1,16 +1,13 @@
 var Connections = require('./stateSources/connections');
 var PageActionCreators = require('./actions/pageActionCreators');
-var StoreActionCreators = require('./actions/storeActionCreators');
 var ActionActionCreators = require('./actions/actionActionCreators');
+var DispatchActionCreators = require('./actions/dispatchActionCreators');
 var DevtoolsActionCreators = require('./actions/devtoolsActionCreators');
 
 Connections.InspectedWindow.onMessage(function (tabId, message) {
   switch (message.type) {
-    case 'STORE_CHANGED':
-      StoreActionCreators.upsertStore(tabId, message.payload);
-      break;
-    case 'ACTION_DISPATCHED':
-      ActionActionCreators.upsertAction(tabId, message.payload);
+    case 'RECEIVE_DISPATCH':
+      DispatchActionCreators.receiveDispatch(tabId, message.payload);
       break;
     case 'PAGE_LOADED':
       PageActionCreators.pageLoaded(tabId, message.payload);
@@ -29,6 +26,8 @@ Connections.Devtools.onMessage(function (message) {
     case 'LOADED':
       DevtoolsActionCreators.devtoolsLoaded(message.tabId);
       break;
+    case 'REVERT_TO_ACTION':
+      ActionActionCreators.revertToAction(message.actionId);
     default:
       console.log('Unknown message from devtools', message.type);
       break;
