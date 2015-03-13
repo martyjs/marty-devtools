@@ -10,6 +10,8 @@ emitter.open = function () {
     name: 'marty-devtools'
   });
 
+  emitter.postMessage = connection.postMessage.bind(connection);
+
   connection.onMessage.addListener(function (message) {
     chrome.devtools.inspectedWindow.eval(`console.log('${message.type}')`);
     emitter.emit(message.type, message.payload);

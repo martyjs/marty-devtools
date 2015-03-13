@@ -1,8 +1,10 @@
 var React = require('react');
 var _ = require('lodash');
 var ObjectTree = require('./objectTree');
+var RevertAction = require('./revertActionMixin');
 
 var ActionDetails = React.createClass({
+  mixins: [RevertAction],
   render: function () {
     if (this.props.action) {
       return this.renderActionDetails();
@@ -17,12 +19,12 @@ var ActionDetails = React.createClass({
       </div>
     );
   },
-
   getDetails: function () {
     var action = this.props.action;
 
     return {
       General: {
+        id: action.id,
         type: action.type,
         arguments: action.arguments
       },

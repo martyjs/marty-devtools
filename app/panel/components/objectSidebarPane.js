@@ -30,7 +30,6 @@ ObjectSidebarPane.prototype = {
   __proto__: WebInspector.SidebarPane.prototype
 };
 
-
 TreeElement.prototype.isEventWithinDisclosureTriangle = function (event) {
   var paddingLeftValue = window.getComputedStyle(this._listItemNode).paddingLeft;
   var computedLeftPadding = parseFloat(paddingLeftValue);

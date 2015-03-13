@@ -4,11 +4,13 @@ function initialize(options) {
   var ActionStore = require('./stores/actionStore'); // jshint ignore:line
   var shimConsole = require('./chrome/shimConsole'); // jshint ignore:line
   var DispatchStore = require('./stores/dispatchStore'); // jshint ignore:line
+  var ConnectionStore = require('./stores/connectionStore'); // jshint ignore:line
   var PageActionCreators = require('./actions/pageActionCreators');
   var DispatchActionCreators = require('./actions/dispatchActionCreators');
 
   shimConsole(window.console);
 
+  chrome.devtools.inspectedWindow.eval(`console.log('initialize 123')`);
   connection.on('RECEIVE_DISPATCH', function (dispatch) {
     DispatchActionCreators.receiveDispatch(dispatch);
   });
@@ -16,7 +18,6 @@ function initialize(options) {
   connection.on('PAGE_LOADED', function (sow) {
     PageActionCreators.pageLoaded(sow);
   });
-
 
   try {
     PageActionCreators.pageLoaded(options.sow, options.connection);

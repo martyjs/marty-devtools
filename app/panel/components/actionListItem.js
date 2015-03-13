@@ -1,9 +1,11 @@
 var React = require('react');
 var _ = require('lodash');
 var ListItem = require('./listItem');
+var RevertAction = require('./revertActionMixin');
 var ActionActionCreators = require('../actions/actionActionCreators');
 
 var ActionListItem = React.createClass({
+  mixins: [RevertAction],
   render: function () {
     var action = this.props.action;
 
@@ -19,23 +21,6 @@ var ActionListItem = React.createClass({
     e.preventDefault();
     e.stopPropagation();
     ActionActionCreators.toggleAction(this.props.action.id);
-  },
-  componentDidMount: function () {
-    var el = React.findDOMNode(this);
-
-    el.addEventListener("contextmenu", (event) => {
-      var contextMenu = new WebInspector.ContextMenu(event);
-     
-      contextMenu.appendItem("Revert to action", () => {
-        ActionActionCreators.revertToAction(this.props.action.id);
-      });
-
-      contextMenu.appendItem("Show application at this action", () => {
-        console.log("Showing application at this action");
-      });
-
-      contextMenu.show();
-    }, true);
   }
 });
 

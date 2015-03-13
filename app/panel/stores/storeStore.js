@@ -1,6 +1,8 @@
 var _ = require('lodash');
 var Marty = require('marty');
+var DispatchStore = require('./dispatchStore');
 var PageConstants = require('../constants/pageConstants');
+var ActionConstants = require('../constants/actionConstants');
 var DispatchConstants = require('../constants/dispatchConstants');
 
 var StoreStore = Marty.createStore({
@@ -8,7 +10,8 @@ var StoreStore = Marty.createStore({
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
     clearStores: PageConstants.PAGE_UNLOADED,
-    updateStores: DispatchConstants.RECEIVE_DISPATCH
+    revertToAction: ActionConstants.REVERT_TO_ACTION,
+    updateStores: DispatchConstants.RECEIVE_DISPATCH,
   },
   getInitialState() {
     return {};
@@ -25,6 +28,13 @@ var StoreStore = Marty.createStore({
   clearStores() {
     this.clear();
     this.hasChanged();
+  },
+  revertToAction(actionId) {
+    var dispatch = DispatchStore.getDispatchForAction(actionId);
+
+    if (dispatch) {
+      this.updateStores(dispatch);
+    }
   },
   pageLoaded(sow) {
     this.updateStores(latestDispatch());

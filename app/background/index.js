@@ -1,5 +1,6 @@
 var Connections = require('./stateSources/connections');
 var PageActionCreators = require('./actions/pageActionCreators');
+var ActionActionCreators = require('./actions/actionActionCreators');
 var DispatchActionCreators = require('./actions/dispatchActionCreators');
 var DevtoolsActionCreators = require('./actions/devtoolsActionCreators');
 
@@ -25,6 +26,8 @@ Connections.Devtools.onMessage(function (message) {
     case 'LOADED':
       DevtoolsActionCreators.devtoolsLoaded(message.tabId);
       break;
+    case 'REVERT_TO_ACTION':
+      ActionActionCreators.revertToAction(message.actionId);
     default:
       console.log('Unknown message from devtools', message.type);
       break;
