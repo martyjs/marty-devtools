@@ -3,7 +3,7 @@ var autoDispatch = require('marty/autoDispatch');
 var ColumnConstants = require('../constants/columnConstants');
 
 var ColumnActionCreators = Marty.createActionCreators({
-  displayName: 'Columns',
+  id: 'ColumnActionCreators',
   updateColumnWidth: autoDispatch(ColumnConstants.UPDATE_COLUMN_WIDTH)
 });
 

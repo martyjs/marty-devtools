@@ -3,22 +3,24 @@ function initialize(options) {
   var StoreStore = require('./stores/storeStore');
   var ActionStore = require('./stores/actionStore'); // jshint ignore:line
   var shimConsole = require('./chrome/shimConsole'); // jshint ignore:line
+  var DispatchStore = require('./stores/dispatchStore'); // jshint ignore:line
   var PageActionCreators = require('./actions/pageActionCreators');
-  var ActionActionCreators = require('./actions/actionActionCreators');
+  var DispatchActionCreators = require('./actions/dispatchActionCreators');
 
   shimConsole(window.console);
 
-  connection.on('ACTION_DISPATCHED', function (dispatch) {
-    ActionActionCreators.actionDispatched(dispatch);
+  connection.on('RECEIVE_DISPATCH', function (dispatch) {
+    DispatchActionCreators.receiveDispatch(dispatch);
   });
 
   connection.on('PAGE_LOADED', function (sow) {
     PageActionCreators.pageLoaded(sow);
   });
 
-  PageActionCreators.pageLoaded(options.sow, options.connection);
 
   try {
+    PageActionCreators.pageLoaded(options.sow, options.connection);
+
     renderMartyPanel();
   } catch (e) {
     console.error('Failed to render panel', e, e.stack);

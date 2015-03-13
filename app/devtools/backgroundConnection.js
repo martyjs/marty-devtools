@@ -11,6 +11,7 @@ emitter.open = function () {
   });
 
   connection.onMessage.addListener(function (message) {
+    chrome.devtools.inspectedWindow.eval(`console.log('${message.type}')`);
     emitter.emit(message.type, message.payload);
   });
 

@@ -1,9 +1,9 @@
 var MartyStore = require('./stores/martyStore');
-var ActionStore = require('./stores/actionStore');
+var DispatchStore = require('./stores/dispatchStore');
 
 function sow(tabId) {
   return {
-    actions: ActionStore.getActionsForTab(tabId),
+    dispatches: DispatchStore.getDispatchesForTab(tabId),
     martyFound: MartyStore.hasMartyBeenFoundInTab(tabId)
   };
 }

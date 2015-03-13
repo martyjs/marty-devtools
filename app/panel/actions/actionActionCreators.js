@@ -4,10 +4,9 @@ var ConnectionStore = require('../stores/connectionStore');
 var ActionConstants = require('../constants/actionConstants');
 
 var ActionActionCreators = Marty.createActionCreators({
-  displayName: 'Actions',
+  id: 'ActionActionCreators',
   toggleAction: autoDispatch(ActionConstants.TOGGLE_ACTION),
   clearActions: autoDispatch(ActionConstants.CLEAR_ACTIONS),
-  actionDispatched: autoDispatch(ActionConstants.ACTION_DISPATCHED),
   unselectAllActions: autoDispatch(ActionConstants.UNSELECT_ALL_ACTIONS),
   revertToAction: function (actionId) {
     this.dispatch(ActionConstants.REVERT_TO_ACTION, actionId);

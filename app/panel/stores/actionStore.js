@@ -3,6 +3,7 @@ var util = require('util');
 var Marty = require('marty');
 var PageConstants = require('../constants/pageConstants');
 var ActionConstants = require('../constants/actionConstants');
+var DispatchConstants = require('../constants/dispatchConstants');
 var statusMap = {
   'ACTION_STARTING': 'Pending',
   'ACTION_FAILED': 'Failed',
@@ -15,20 +16,20 @@ var ActionStore = Marty.createStore({
     pageLoaded: PageConstants.PAGE_LOADED,
     toggleAction: ActionConstants.TOGGLE_ACTION,
     revertToAction: ActionConstants.REVERT_TO_ACTION,
-    addDispatchedAction: ActionConstants.ACTION_DISPATCHED,
+    receiveDispatch: DispatchConstants.RECEIVE_DISPATCH,
     unselectAllActions: ActionConstants.UNSELECT_ALL_ACTIONS,
     clearActions: [ActionConstants.CLEAR_ACTIONS, PageConstants.PAGE_UNLOADED]
   },
-  getInitialState: function () {
+  getInitialState() {
     return {};
   },
-  clearActions: function () {
+  clearActions() {
     this.clear();
     this.hasChanged();
   },
-  pageLoaded: function (sow) {
+  pageLoaded(sow) {
     var actions = {};
-    _.each(sow.actions, function (dispatch) {
+    _.each(sow.dispatches, function (dispatch) {
       var action = dispatch.action;
       actions[action.id] = action;
     });
@@ -36,21 +37,21 @@ var ActionStore = Marty.createStore({
     this.state = actions;
     this.hasChanged();
   },
-  getAll: function () {
+  getAll() {
     return _.sortBy(_.values(this.state), 'timestamp').reverse();
   },
-  getActionById: function (id) {
+  getActionById(id) {
     return this.state[id];
   },
-  getLatestAction: function () {
+  getLatestAction() {
     return _.first(this.getAll());
   },
-  getSelectedAction: function () {
+  getSelectedAction() {
     return _.find(this.state, {
       selected: true
     });
   },
-  revertToAction: function (actionId) {
+  revertToAction(actionId) {
     var subject = this.state[actionId];
 
     _.each(this.state, (action) => {
@@ -61,7 +62,7 @@ var ActionStore = Marty.createStore({
 
     this.hasChanged();
   },
-  addDispatchedAction: function (dispatch) {
+  receiveDispatch(dispatch) {
     var action = dispatch.action;
 
     if (!action) {
@@ -71,13 +72,13 @@ var ActionStore = Marty.createStore({
     this.state[action.id] = action;
     this.hasChanged();
   },
-  unselectAllActions: function () {
+  unselectAllActions() {
     _.each(this.state, function (action) {
       action.selected = false;
     });
     this.hasChanged();
   },
-  toggleAction: function (actionId) {
+  toggleAction(actionId) {
     _.each(this.state, function (action) {
       if (action.id === actionId) {
         action.selected = !action.selected;

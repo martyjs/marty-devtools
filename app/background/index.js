@@ -1,12 +1,12 @@
 var Connections = require('./stateSources/connections');
 var PageActionCreators = require('./actions/pageActionCreators');
-var ActionActionCreators = require('./actions/actionActionCreators');
+var DispatchActionCreators = require('./actions/dispatchActionCreators');
 var DevtoolsActionCreators = require('./actions/devtoolsActionCreators');
 
 Connections.InspectedWindow.onMessage(function (tabId, message) {
   switch (message.type) {
-    case 'ACTION_DISPATCHED':
-      ActionActionCreators.actionDispatched(tabId, message.payload);
+    case 'RECEIVE_DISPATCH':
+      DispatchActionCreators.receiveDispatch(tabId, message.payload);
       break;
     case 'PAGE_LOADED':
       PageActionCreators.pageLoaded(tabId, message.payload);

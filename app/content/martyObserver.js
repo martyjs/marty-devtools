@@ -78,7 +78,7 @@
     Dispatcher.onActionDispatched(onActionDispatched);
 
     function onActionDispatched(action) {
-      postMessage('ACTION_DISPATCHED', {
+      postMessage('RECEIVE_DISPATCH', {
         id: action.id,
         action: action.toJSON(),
         stores: stores()

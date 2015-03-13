@@ -1,39 +1,41 @@
 var _ = require('lodash');
 var Marty = require('marty');
 var PageConstants = require('../constants/pageConstants');
-var ActionConstants = require('../constants/actionConstants');
+var DispatchConstants = require('../constants/dispatchConstants');
 
 var StoreStore = Marty.createStore({
   id: 'Stores',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
     clearStores: PageConstants.PAGE_UNLOADED,
-    updateStores: ActionConstants.ACTION_DISPATCHED
+    updateStores: DispatchConstants.RECEIVE_DISPATCH
   },
-  getInitialState: function () {
+  getInitialState() {
     return {};
   },
-  updateStores: function (dispatch) {
-    _.each(dispatch.stores, function (store, storeId) {
-      this.state[storeId] = store.state;
-    }, this);
+  updateStores(dispatch) {
+    if (dispatch) {
+      _.each(dispatch.stores, function (store, storeId) {
+        this.state[storeId] = store.state;
+      }, this);
 
-    this.hasChanged();
+      this.hasChanged();
+    }
   },
-  clearStores: function () {
+  clearStores() {
     this.clear();
     this.hasChanged();
   },
-  pageLoaded: function (sow) {
-    var latestAction = _.last(_.sortBy(sow.actions, function (dispatch) {
-      return dispatch.action.timestamp;
-    }));
+  pageLoaded(sow) {
+    this.updateStores(latestDispatch());
 
-    if (latestAction) {
-      this.updateStores(latestAction);
+    function latestDispatch() {
+      return _.last(_.sortBy(sow.dispatches, function (dispatch) {
+        return dispatch.action.timestamp;
+      }));
     }
   },
-  getStoreStates: function () {
+  getStoreStates() {
     return this.state;
   }
 });
