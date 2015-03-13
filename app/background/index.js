@@ -1,6 +1,5 @@
 var Connections = require('./stateSources/connections');
 var PageActionCreators = require('./actions/pageActionCreators');
-var StoreActionCreators = require('./actions/storeActionCreators');
 var ActionActionCreators = require('./actions/actionActionCreators');
 var DevtoolsActionCreators = require('./actions/devtoolsActionCreators');
 

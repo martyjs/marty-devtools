@@ -1,7 +1,7 @@
 var React = require('react');
 var StoresStore = require('../stores/storeStore');
-var StoresSidePanel = require('./storesSidePanel');
 var DataFlowExplorer = require('./dataFlowExplorer');
+var ObjectSidebarPane = require('./objectSidebarPane');
 
 var DEFAULT_SIDEBAR_WIDTH = 325;
 var DEFAULT_SIDEBAR_HEIGHT = 325;
@@ -23,34 +23,38 @@ function MartyPanel() {
   this.storesPane = createStoresPane(this.sidebarPaneView);
   this.sidebarPaneView.show(this.splitView.sidebarElement);
 
+  this.sidebarPanes = {};
+  this.sidebarPanes.stores = createStoresPane();
 
-  // this.splitView.mainElement.addEventListener("contextmenu", function (event) {
-  //   function toggleWordWrap() {
-  //     WebInspector.settings.domWordWrap.set(!WebInspector.settings.domWordWrap.get());
-  //   }
-  // Revert to action
-  // Show application at this point
-  //   var contextMenu = new WebInspector.ContextMenu(event);
-  //   // Disabled
-  //   contextMenu.appendCheckboxItem(WebInspector.UIString(WebInspector.useLowerCaseMenuTitles() ? "Fuck yeah" : "Fuck yeah"), toggleWordWrap, WebInspector.settings.domWordWrap.get());
+  this.sidebarPaneView.addPane(this.sidebarPanes.stores);
 
-  //   contextMenu.show();
-  // }, true);
+
 
   React.render(<DataFlowExplorer />, this.splitView.mainElement);
 
-  function createStoresPane(parent) {
-    var storesPane = new StoresSidePanel("Stores", "No stores");
+  function createGeneralPanel() {
+    var pane = new ObjectSidebarPane('General', '', edit);
 
-    updateStorePane();
-    StoresStore.addChangeListener(updateStorePane);
-    storesPane.expand();
-    parent.addPane(storesPane);
+    pane.update({
+      State: {}
+    });
 
-    return storesPane;
+    pane.expand();
 
-    function updateStorePane() {
-      storesPane.update(StoresStore.getStoreStates());
+    return pane;
+  }
+
+  function createStoresPane() {
+    var pane = new ObjectSidebarPane('Stores', 'No stores');
+
+    updatePane();
+    StoresStore.addChangeListener(updatePane);
+    pane.expand();
+
+    return pane;
+
+    function updatePane() {
+      pane.update(StoresStore.getStoreStates());
     }
   }
 

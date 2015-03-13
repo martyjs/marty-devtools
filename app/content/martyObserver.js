@@ -65,7 +65,7 @@
 
     postMessage('PAGE_LOADED', {
       martyFound: true,
-      stores: Marty.dehydrate().toJSON()
+      stores: stores()
     });
 
     var Dispatcher = Marty.Dispatcher.getDefault();
@@ -81,9 +81,13 @@
       postMessage('ACTION_DISPATCHED', {
         id: action.id,
         action: action.toJSON(),
-        dehydratedState: Marty.dehydrate()
+        stores: stores()
       });
     }
+  }
+
+  function stores() {
+    return Marty.dehydrate().toJSON();
   }
 
   function serialize(obj) {

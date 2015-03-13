@@ -14,6 +14,7 @@ var ActionStore = Marty.createStore({
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
     toggleAction: ActionConstants.TOGGLE_ACTION,
+    revertToAction: ActionConstants.REVERT_TO_ACTION,
     addDispatchedAction: ActionConstants.ACTION_DISPATCHED,
     unselectAllActions: ActionConstants.UNSELECT_ALL_ACTIONS,
     clearActions: [ActionConstants.CLEAR_ACTIONS, PageConstants.PAGE_UNLOADED]
@@ -27,7 +28,8 @@ var ActionStore = Marty.createStore({
   },
   pageLoaded: function (sow) {
     var actions = {};
-    _.each(sow.actions, function (action) {
+    _.each(sow.actions, function (dispatch) {
+      var action = dispatch.action;
       actions[action.id] = action;
     });
 
@@ -40,10 +42,24 @@ var ActionStore = Marty.createStore({
   getActionById: function (id) {
     return this.state[id];
   },
+  getLatestAction: function () {
+    return _.first(this.getAll());
+  },
   getSelectedAction: function () {
     return _.find(this.state, {
       selected: true
     });
+  },
+  revertToAction: function (actionId) {
+    var subject = this.state[actionId];
+
+    _.each(this.state, (action) => {
+      if (action.timestamp > subject.timestamp) {
+        delete this.state[action.id];
+      }
+    });
+
+    this.hasChanged();
   },
   addDispatchedAction: function (dispatch) {
     var action = dispatch.action;

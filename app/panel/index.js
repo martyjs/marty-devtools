@@ -8,10 +8,6 @@ function initialize(options) {
 
   shimConsole(window.console);
 
-  connection.on('*', function () {
-    console.log(arguments);
-  })
-
   connection.on('ACTION_DISPATCHED', function (dispatch) {
     ActionActionCreators.actionDispatched(dispatch);
   });
@@ -20,7 +16,7 @@ function initialize(options) {
     PageActionCreators.pageLoaded(sow);
   });
 
-  PageActionCreators.pageLoaded(options.sow);
+  PageActionCreators.pageLoaded(options.sow, options.connection);
 
   try {
     renderMartyPanel();

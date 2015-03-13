@@ -19,6 +19,23 @@ var ActionListItem = React.createClass({
     e.preventDefault();
     e.stopPropagation();
     ActionActionCreators.toggleAction(this.props.action.id);
+  },
+  componentDidMount: function () {
+    var el = React.findDOMNode(this);
+
+    el.addEventListener("contextmenu", (event) => {
+      var contextMenu = new WebInspector.ContextMenu(event);
+     
+      contextMenu.appendItem("Revert to action", () => {
+        ActionActionCreators.revertToAction(this.props.action.id);
+      });
+
+      contextMenu.appendItem("Show application at this action", () => {
+        console.log("Showing application at this action");
+      });
+
+      contextMenu.show();
+    }, true);
   }
 });
 

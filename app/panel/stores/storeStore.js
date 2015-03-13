@@ -1,20 +1,23 @@
-var Marty = require('marty');
 var _ = require('lodash');
+var Marty = require('marty');
 var PageConstants = require('../constants/pageConstants');
-var StoreConstants = require('../constants/storeConstants');
+var ActionConstants = require('../constants/actionConstants');
 
 var StoreStore = Marty.createStore({
   id: 'Stores',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED,
-    // upsertStore: StoreConstants.UPSERT_ACTION,
     clearStores: PageConstants.PAGE_UNLOADED,
+    updateStores: ActionConstants.ACTION_DISPATCHED
   },
   getInitialState: function () {
     return {};
   },
-  upsertStore: function (action) {
-    this.state[store.id] = store;
+  updateStores: function (dispatch) {
+    _.each(dispatch.stores, function (store, storeId) {
+      this.state[storeId] = store.state;
+    }, this);
+
     this.hasChanged();
   },
   clearStores: function () {
@@ -22,18 +25,16 @@ var StoreStore = Marty.createStore({
     this.hasChanged();
   },
   pageLoaded: function (sow) {
-    this.state = sow.stores;
+    var latestAction = _.last(_.sortBy(sow.actions, function (dispatch) {
+      return dispatch.action.timestamp;
+    }));
 
-    this.hasChanged();
+    if (latestAction) {
+      this.updateStores(latestAction);
+    }
   },
   getStoreStates: function () {
-    var states = {};
-
-    _.each(this.state, function (store, id) {
-      states[id] = store.state;
-    });
-
-    return states;
+    return this.state;
   }
 });
 
