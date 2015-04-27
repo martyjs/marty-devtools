@@ -3,6 +3,14 @@
 
   var MartyDevTools = {
     serializers: {
+      error: {
+        canSerialize: function (obj) {
+          return obj instanceof Error;
+        },
+        serialize: function (obj) {
+          return obj.valueOf();
+        }
+      },
       immutable: {
         canSerialize: function (obj) {
           return !!obj.toJS;
