@@ -43,10 +43,10 @@
 
   function tryAndFindMarty(time) {
     if (window.Marty) {
-      if (Marty.version === '0.9.0-rc1' || !/^0.9./.test(Marty.version)) {
-      console.warn('Marty DevTools only works with Marty v0.9');
-      return martyNotFound();
-    }
+      if (!/^0\.(9|10)\..*/.test(Marty.version)) {
+        console.warn('Marty DevTools only works with Marty v0.9 and Marty v0.10');
+        return martyNotFound();
+      }
 
       listenToMarty(window.Marty);
     } else {
@@ -67,35 +67,44 @@
   }
 
   function listenToMarty(Marty) {
-    if (Marty.Diagnostics) {
-      Marty.Diagnostics.devtoolsEnabled = true;
+    var diagnostics = Marty.Diagnostics || Marty.diagnostics;
+
+    if (diagnostics) {
+      diagnostics.devtoolsEnabled = true;
     }
 
-    postMessage('PAGE_LOADED', {
-      martyFound: true,
-      stores: stores()
-    });
+    // v0.9 when we have a global dispatcher
+    if (Marty.Dispatcher) {
+      var dispatcher = Marty.Dispatcher.getDefault();
 
-    var Dispatcher = Marty.Dispatcher.getDefault();
+      if (!dispatcher) {
+        console.error('No default dispatcher');
+        return;
+      }
 
-    if (!Dispatcher) {
-      console.error('No default dispatcher');
-      return;
-    }
+      observe(dispatcher, Marty.dehydrate.bind(Marty));
 
-    Dispatcher.onActionDispatched(onActionDispatched);
-
-    function onActionDispatched(action) {
-      postMessage('RECEIVE_DISPATCH', {
-        id: action.id,
-        action: action.toJSON(),
-        stores: stores()
+      // v0.10 when we have applications
+    } else if (Marty.Application && Marty.Application.__getCurrentApplication) {
+      Marty.Application.__getCurrentApplication(function (app) {
+        observe(app.dispatcher, app.dehydrate.bind(app));
       });
     }
-  }
 
-  function stores() {
-    return Marty.dehydrate().toJSON();
+    function observe(dispatcher, dehydrate) {
+      postMessage('PAGE_LOADED', {
+        martyFound: true,
+        stores: dehydrate().toJSON()
+      });
+
+      dispatcher.onActionDispatched(function (action) {
+        postMessage('RECEIVE_DISPATCH', {
+          id: action.id,
+          action: action.toJSON(),
+          stores: dehydrate().toJSON()
+        });
+      });
+    }
   }
 
   function serialize(obj) {
