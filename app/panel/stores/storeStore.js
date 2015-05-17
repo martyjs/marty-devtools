@@ -37,6 +37,7 @@ var StoreStore = Marty.createStore({
     }
   },
   pageLoaded(sow) {
+    this.clearStores();
     this.updateStores(latestDispatch());
 
     function latestDispatch() {

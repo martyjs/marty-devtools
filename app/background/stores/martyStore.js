@@ -3,7 +3,7 @@ var Marty = require('marty');
 var PageConstants = require('../constants/pageConstants');
 
 var MartyStore = Marty.createStore({
-  displayName: 'Marty',
+  id: 'Marty',
   handlers: {
     pageLoaded: PageConstants.PAGE_LOADED
   },

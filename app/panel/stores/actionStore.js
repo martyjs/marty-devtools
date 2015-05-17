@@ -28,6 +28,8 @@ var ActionStore = Marty.createStore({
     this.hasChanged();
   },
   pageLoaded(sow) {
+    this.clearActions();
+
     var actions = {};
     _.each(sow.dispatches, function (dispatch) {
       var action = dispatch.action;

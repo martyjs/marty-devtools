@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt)
 
-  grunt.registerTask('default', 'concurrent:serve');
+  grunt.registerTask('default', 'concurrent:watch');
   grunt.registerTask('build-watch', 'concurrent:watch');
   grunt.registerTask('build', ['browserify:releasePanel', 'browserify:releaseDevtools', 'browserify:releaseBackground']);
 
@@ -15,6 +15,7 @@ module.exports = function (grunt) {
       watch: {
         tasks: [
           'browserify:watchPanel',
+          'browserify:watchServer',
           'browserify:watchDevtools',
           'browserify:watchBackground'
         ],
@@ -25,13 +26,19 @@ module.exports = function (grunt) {
     },
     browserify: {
       releasePanel: panelOptions(),
+      releaseServer: serverOptions(),
       releaseDevtools: devtoolsOptions(),
       releaseBackground: backgroundOptions(),
       watchPanel: panelOptions(watchOptions),
+      watchServer: serverOptions(watchOptions),
       watchDevtools: devtoolsOptions(watchOptions),
       watchBackground: backgroundOptions(watchOptions),
     }
   });
+
+  function serverOptions(options) {
+    return browserifyOptions('./app/server/client/index.js', './dist/server.js', options);
+  }
 
   function panelOptions(options) {
     return browserifyOptions('./app/panel/index.js', './dist/panel.js', options);

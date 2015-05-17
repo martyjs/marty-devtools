@@ -7,11 +7,14 @@ var ActionConstants = require('../constants/actionConstants');
 var DispatchConstants = require('../constants/dispatchConstants');
 
 var DispatchStore = Marty.createStore({
-  displayName: 'DispatchStore',
+  id: 'DispatchStore',
   handlers: {
     addDispatch: DispatchConstants.RECEIVE_DISPATCH,
     revertToAction: ActionConstants.REVERT_TO_ACTION,
-    clearDispatchesForTab: PageConstants.PAGE_UNLOADED,
+    clearDispatchesForTab: [
+      PageConstants.PAGE_LOADED,
+      PageConstants.PAGE_UNLOADED
+    ],
   },
   getInitialState() {
     return {};

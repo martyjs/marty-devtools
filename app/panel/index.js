@@ -10,7 +10,6 @@ function initialize(options) {
 
   shimConsole(window.console);
 
-  chrome.devtools.inspectedWindow.eval(`console.log('initialize 123')`);
   connection.on('RECEIVE_DISPATCH', function (dispatch) {
     DispatchActionCreators.receiveDispatch(dispatch);
   });
